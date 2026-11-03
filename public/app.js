@@ -42,6 +42,8 @@
 
   // ================================================================ API
   async function api(path, opts = {}) {
+    // version de démonstration (sans serveur) : l'API est simulée dans le navigateur
+    if (window.PDP_API) return window.PDP_API(path, opts);
     const res = await fetch(path, {
       method: opts.method || 'GET',
       headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) },
@@ -1020,15 +1022,25 @@
   }
 
   // ---------------------------------------------------------------- administration
+  function sess(op, value) {
+    try {
+      if (op === 'get') return sessionStorage.getItem('pdp_admin');
+      if (op === 'set') return sessionStorage.setItem('pdp_admin', value);
+      return sessionStorage.removeItem('pdp_admin');
+    } catch {
+      if (op === 'get') return S.adminKey;
+      S.adminKey = op === 'set' ? value : '';
+    }
+  }
   async function pageAdmin() {
     setActiveNav('', '');
-    const key = sessionStorage.getItem('pdp_admin') || '';
+    const key = sess('get') || '';
     if (!key) return adminLogin();
     let data;
     try {
       data = await api('/api/admin/orders', { headers: { 'x-admin-key': key } });
     } catch (err) {
-      sessionStorage.removeItem('pdp_admin');
+      sess('remove');
       return adminLogin(err.message);
     }
     const sum = data.orders.filter((o) => o.status !== 'annulee').reduce((s, o) => s + o.total, 0);
@@ -1058,7 +1070,7 @@
         <thead><tr><th>Code</th><th>Créé par</th><th>Ville</th><th>Articles</th><th>Statut</th></tr></thead>
         <tbody>${data.sharedCarts.map((c) => `<tr><td><a class="link" href="#/partage/${c.code}">${c.code}</a></td><td>${esc(c.requester.name)}<br><small>${esc(c.requester.phone)}</small></td><td>${esc(c.recipient.city)}</td><td>${c.items.length}</td><td><span class="status-pill ${c.status}">${c.status === 'payee' ? 'Payé · ' + esc(c.orderId) : 'En attente'}</span></td></tr>`).join('') || '<tr><td colspan="5" class="muted">Aucun panier partagé.</td></tr>'}</tbody>
       </table></div>`;
-    $('#logout').addEventListener('click', () => { sessionStorage.removeItem('pdp_admin'); pageAdmin(); });
+    $('#logout').addEventListener('click', () => { sess('remove'); pageAdmin(); });
     $$('[data-status]').forEach((sel) => sel.addEventListener('change', async () => {
       try {
         await api(`/api/admin/orders/${sel.dataset.status}`, { method: 'PATCH', headers: { 'x-admin-key': key }, body: { status: sel.value } });
@@ -1075,7 +1087,7 @@
       </form>`;
     $('#admin-login').addEventListener('submit', (e) => {
       e.preventDefault();
-      sessionStorage.setItem('pdp_admin', e.target.key.value);
+      sess('set', e.target.key.value);
       pageAdmin();
     });
   }

@@ -44,3 +44,7 @@ public/            site (index.html, styles.css, app.js)
 - **Photos** : les produits sont illustrés par des emojis. Remplacez-les par de vraies photos.
 - **Données** : elles sont stockées dans un fichier JSON. Passez à une vraie base (PostgreSQL, SQLite…) quand le volume augmente.
 - **Notifications** : prévoir l'envoi d'un e-mail ou d'un message WhatsApp (API WhatsApp Business) à chaque changement de statut.
+
+## Version de démonstration (sans serveur)
+
+`node scripts/build-demo.js` génère `demo/index.html` : tout le site dans un seul fichier, avec le catalogue intégré et l'API simulée dans le navigateur (`demo/api-mock.js`). C'est pratique pour montrer le site. Mais les commandes et les paniers partagés restent dans le navigateur de chaque visiteur : pour que le lien d'un panier partagé fonctionne entre deux personnes, il faut le vrai serveur.

@@ -1,0 +1,1719 @@
+<title>Panier du Pays</title>
+<meta name="description" content="Depuis l'étranger, achetez vivres, vêtements, chaussures, cadeaux et paniers pour votre famille au Cameroun.">
+<style>
+:root {
+  --ink: #111;
+  --ink-2: #555;
+  --ink-3: #8a8a8a;
+  --line: #e9e9e9;
+  --bg: #fff;
+  --bg-soft: #f6f6f6;
+  --sale: #fa3c2d;
+  --sale-soft: #fff0ee;
+  --green: #007a5e;
+  --green-soft: #e7f5f0;
+  --yellow: #fcd116;
+  --red: #ce1126;
+  --radius: 10px;
+  --shadow: 0 6px 24px rgba(0, 0, 0, .08);
+  --max: 1280px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); }
+body { font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; padding-bottom: 64px; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+
+/* ---------- barre promo ---------- */
+.promo-bar {
+  background: var(--ink); color: #fff; text-align: center; font-size: 12px; letter-spacing: .3px;
+  padding: 7px 16px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+.promo-bar span { display: inline-block; animation: fade .5s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---------- en-tête ---------- */
+.header { position: sticky; top: 0; z-index: 30; background: #fff; border-bottom: 1px solid var(--line); }
+.header-inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; gap: 16px; padding: 10px 16px; }
+.logo { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.logo-mark { font-size: 24px; }
+.logo-text { font-weight: 900; font-size: 19px; letter-spacing: 1.5px; }
+.logo-text b { font-weight: 900; color: var(--green); margin-left: 4px; }
+.search { flex: 1; display: flex; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; max-width: 620px; margin: 0 auto; }
+.search input { flex: 1; border: 0; padding: 9px 16px; outline: none; min-width: 0; background: transparent; }
+.search button { border: 0; background: var(--ink); color: #fff; padding: 0 18px; display: grid; place-items: center; }
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.icon-btn { position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; }
+.icon-btn:hover { background: var(--bg-soft); }
+.badge { position: absolute; top: 2px; right: 0; background: var(--sale); color: #fff; font-size: 10px; font-weight: 700; min-width: 17px; height: 17px; border-radius: 9px; display: grid; place-items: center; padding: 0 4px; }
+.currency { border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; background: #fff; font-weight: 600; font-size: 13px; }
+
+.cat-nav { max-width: var(--max); margin: 0 auto; display: flex; gap: 22px; padding: 0 16px; overflow-x: auto; scrollbar-width: none; }
+.cat-nav::-webkit-scrollbar { display: none; }
+.cat-nav a { white-space: nowrap; padding: 10px 0 9px; font-size: 14px; color: var(--ink-2); border-bottom: 2px solid transparent; }
+.cat-nav a.active, .cat-nav a:hover { color: var(--ink); border-bottom-color: var(--ink); font-weight: 600; }
+.cat-nav a.hot { color: var(--sale); font-weight: 700; }
+
+/* ---------- mise en page ---------- */
+.app { max-width: var(--max); margin: 0 auto; padding: 0 16px 40px; min-height: 60vh; }
+.section { margin-top: 28px; }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.section-head h2 { font-size: 20px; margin: 0; font-weight: 800; letter-spacing: .2px; }
+.section-head a { color: var(--ink-2); font-size: 13px; white-space: nowrap; }
+.page-title { font-size: 24px; font-weight: 800; margin: 22px 0 6px; }
+.muted { color: var(--ink-3); }
+.breadcrumb { font-size: 12px; color: var(--ink-3); margin: 14px 0 0; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* ---------- bannière ---------- */
+.hero { position: relative; margin-top: 16px; border-radius: 14px; overflow: hidden; aspect-ratio: 16 / 6; min-height: 210px; }
+.slide { position: absolute; inset: 0; display: flex; align-items: center; padding: 0 6%; opacity: 0; transition: opacity .6s ease; color: #fff; }
+.slide.active { opacity: 1; z-index: 1; }
+.slide-text { max-width: 56%; }
+.slide small { display: inline-block; background: rgba(255,255,255,.18); padding: 4px 10px; border-radius: 999px; font-weight: 600; font-size: 12px; letter-spacing: .5px; }
+.slide h1 { font-size: clamp(22px, 4vw, 46px); line-height: 1.05; margin: 12px 0 10px; font-weight: 900; }
+.slide p { margin: 0 0 18px; opacity: .92; font-size: clamp(13px, 1.4vw, 17px); }
+.slide-art { position: absolute; right: 6%; top: 50%; transform: translateY(-50%); font-size: clamp(70px, 13vw, 180px); filter: drop-shadow(0 12px 24px rgba(0,0,0,.25)); }
+.hero-dots { position: absolute; bottom: 12px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; z-index: 2; }
+.hero-dots button { width: 8px; height: 8px; border-radius: 50%; border: 0; background: rgba(255,255,255,.5); padding: 0; }
+.hero-dots button.active { background: #fff; width: 22px; border-radius: 4px; }
+
+/* ---------- boutons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 999px; padding: 12px 24px; font-weight: 700; font-size: 14px; background: var(--ink); color: #fff; transition: transform .1s, opacity .2s; }
+.btn:hover { opacity: .88; }
+.btn:active { transform: scale(.98); }
+.btn-white { background: #fff; color: var(--ink); }
+.btn-outline { background: #fff; color: var(--ink); border: 1.5px solid var(--ink); }
+.btn-green { background: var(--green); }
+.btn-sale { background: var(--sale); }
+.btn-wa { background: #25d366; }
+.btn-block { width: 100%; }
+.btn-sm { padding: 8px 14px; font-size: 13px; }
+.btn[disabled] { opacity: .5; pointer-events: none; }
+.link { color: var(--green); font-weight: 600; text-decoration: underline; background: none; border: 0; padding: 0; }
+
+/* ---------- catégories rondes ---------- */
+.cat-circles { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 12px; }
+.cat-circle { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; font-size: 12px; color: var(--ink-2); }
+.cat-circle span { width: 100%; max-width: 86px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-size: 34px; transition: transform .2s; }
+.cat-circle:hover span { transform: translateY(-3px); }
+
+/* ---------- ventes flash ---------- */
+.flash { background: linear-gradient(90deg, #fff0ee, #fff8e6); border-radius: 14px; padding: 16px; }
+.flash-title { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.flash-title h2 { color: var(--sale); font-style: italic; }
+.countdown { display: flex; gap: 4px; align-items: center; font-weight: 700; font-size: 13px; }
+.countdown b { background: var(--ink); color: #fff; border-radius: 4px; padding: 2px 6px; font-variant-numeric: tabular-nums; }
+.h-scroll { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(150px, 180px); gap: 12px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+.h-scroll > * { scroll-snap-align: start; }
+
+/* ---------- cartes produit ---------- */
+.grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px 14px; }
+.card { position: relative; display: flex; flex-direction: column; gap: 6px; }
+.card-media { position: relative; }
+.card-img { position: relative; aspect-ratio: 3 / 4; border-radius: 8px; display: grid; place-items: center; overflow: hidden; }
+.card-img .emoji { font-size: 74px; transition: transform .35s ease; filter: drop-shadow(0 8px 14px rgba(0,0,0,.15)); }
+.card:hover .emoji { transform: scale(1.1) rotate(-3deg); }
+.tag { position: absolute; top: 8px; left: 0; background: var(--sale); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 0 4px 4px 0; }
+.tag.new { background: var(--green); }
+.tag.best { background: var(--ink); }
+.tag + .tag { top: 30px; }
+.fav { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(255,255,255,.9); display: grid; place-items: center; font-size: 16px; z-index: 2; }
+.quick-add { position: absolute; bottom: 8px; right: 8px; width: 34px; height: 34px; border-radius: 50%; border: 0; background: #fff; box-shadow: var(--shadow); font-size: 20px; font-weight: 400; display: grid; place-items: center; z-index: 2; }
+.quick-add:hover { background: var(--ink); color: #fff; }
+.card-name { font-size: 13px; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 37px; }
+.price-row { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.price { font-weight: 800; font-size: 16px; }
+.price.sale { color: var(--sale); }
+.old { color: var(--ink-3); text-decoration: line-through; font-size: 12px; }
+.off { color: var(--sale); font-size: 11px; font-weight: 700; border: 1px solid var(--sale); border-radius: 3px; padding: 0 4px; }
+.meta { font-size: 11px; color: var(--ink-3); display: flex; gap: 6px; align-items: center; }
+.stars { color: #f5a623; letter-spacing: -1px; }
+.sold-bar { height: 6px; background: #ffd6d2; border-radius: 3px; overflow: hidden; }
+.sold-bar i { display: block; height: 100%; background: var(--sale); border-radius: 3px; }
+
+/* ---------- comment ça marche ---------- */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.step { background: var(--bg-soft); border-radius: 12px; padding: 18px; }
+.step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-weight: 800; margin-bottom: 10px; }
+.step h3 { margin: 0 0 6px; font-size: 15px; }
+.step p { margin: 0; color: var(--ink-2); font-size: 13px; }
+
+.share-cta { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; align-items: center; background: var(--ink); color: #fff; border-radius: 14px; padding: 28px; overflow: hidden; position: relative; }
+.share-cta h2 { font-size: 26px; margin: 0 0 8px; }
+.share-cta p { margin: 0 0 16px; opacity: .85; }
+.share-cta .flag { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: linear-gradient(90deg, var(--green) 33.3%, var(--red) 33.3% 66.6%, var(--yellow) 66.6%); }
+.share-visual { display: flex; align-items: center; justify-content: center; gap: 14px; font-size: 46px; }
+.share-visual i { font-style: normal; font-size: 22px; opacity: .7; }
+.share-visual figure { margin: 0; text-align: center; }
+.share-visual figcaption { font-size: 12px; opacity: .8; margin-top: 4px; }
+
+.trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.trust div { display: flex; gap: 10px; align-items: center; padding: 14px; border: 1px solid var(--line); border-radius: 12px; font-size: 13px; }
+.trust b { display: block; font-size: 14px; }
+.trust span:first-child { font-size: 26px; }
+
+/* ---------- liste / filtres ---------- */
+.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 14px 0 18px; position: sticky; top: 103px; background: #fff; z-index: 5; padding: 8px 0; }
+.chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.chip { white-space: nowrap; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 14px; font-size: 13px; }
+.chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.select { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; }
+.empty { text-align: center; padding: 60px 16px; color: var(--ink-2); }
+.empty .big { font-size: 64px; }
+.empty h2 { color: var(--ink); margin: 10px 0 6px; }
+
+/* ---------- fiche produit ---------- */
+.product { display: grid; grid-template-columns: 1.1fr 1fr; gap: 36px; margin-top: 18px; }
+.gallery { display: grid; grid-template-columns: 70px 1fr; gap: 10px; align-self: start; position: sticky; top: 120px; }
+.thumbs { display: flex; flex-direction: column; gap: 8px; }
+.thumbs button { aspect-ratio: 3/4; border-radius: 6px; border: 2px solid transparent; font-size: 28px; display: grid; place-items: center; }
+.thumbs button.active { border-color: var(--ink); }
+.main-img { aspect-ratio: 3/4; border-radius: 12px; display: grid; place-items: center; font-size: clamp(120px, 18vw, 230px); position: relative; filter: none; }
+.main-img span { filter: drop-shadow(0 18px 30px rgba(0,0,0,.18)); }
+.p-info h1 { font-size: 22px; margin: 0 0 8px; font-weight: 700; line-height: 1.25; }
+.p-price { display: flex; align-items: baseline; gap: 10px; margin: 14px 0; background: var(--sale-soft); padding: 12px 14px; border-radius: 10px; flex-wrap: wrap; }
+.p-price .price { font-size: 26px; }
+.p-price .conv { width: 100%; font-size: 12px; color: var(--ink-2); }
+.opt-label { font-weight: 700; margin: 18px 0 8px; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 16px; font-size: 13px; }
+.opt small { color: var(--ink-3); margin-left: 4px; }
+.opt.active { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); font-weight: 700; }
+.qty { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.qty button { width: 36px; height: 36px; border: 0; background: #fff; font-size: 18px; }
+.qty span { min-width: 34px; text-align: center; font-weight: 700; }
+.p-actions { display: flex; gap: 10px; margin: 22px 0; }
+.p-actions .btn { flex: 1; padding: 15px; }
+.fav-lg { width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid var(--line); background: #fff; font-size: 22px; flex-shrink: 0; }
+.info-box { border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 10px; font-size: 13px; }
+.info-box div { display: flex; gap: 10px; }
+.info-box b { display: block; }
+.contents { margin: 0; padding-left: 18px; color: var(--ink-2); }
+.contents li { margin: 3px 0; }
+.desc { color: var(--ink-2); }
+.reviews { display: grid; gap: 10px; }
+.review { border-bottom: 1px solid var(--line); padding: 10px 0; }
+.review-head { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-3); }
+
+/* ---------- panier ---------- */
+.cart-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; align-items: start; margin-top: 10px; }
+.cart-item { display: grid; grid-template-columns: 90px 1fr auto; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.cart-thumb { aspect-ratio: 3/4; border-radius: 8px; display: grid; place-items: center; font-size: 40px; }
+.cart-item h3 { font-size: 14px; font-weight: 500; margin: 0 0 4px; }
+.cart-item .opt-pill { display: inline-block; background: var(--bg-soft); border-radius: 4px; font-size: 12px; padding: 2px 8px; color: var(--ink-2); }
+.cart-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.remove { border: 0; background: none; color: var(--ink-3); font-size: 12px; text-decoration: underline; }
+.summary { background: var(--bg-soft); border-radius: 14px; padding: 18px; position: sticky; top: 120px; display: grid; gap: 10px; }
+.summary h3 { margin: 0 0 4px; }
+.sum-row { display: flex; justify-content: space-between; gap: 12px; color: var(--ink-2); }
+.sum-row.total { color: var(--ink); font-weight: 800; font-size: 18px; border-top: 1px solid var(--line); padding-top: 10px; }
+.sum-row .free { color: var(--green); font-weight: 700; }
+.free-ship { font-size: 12px; background: #fff; border-radius: 8px; padding: 10px; }
+.free-ship .bar { height: 6px; background: var(--line); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+.free-ship .bar i { display: block; height: 100%; background: var(--green); }
+.or { text-align: center; font-size: 12px; color: var(--ink-3); position: relative; }
+.hint { font-size: 12px; color: var(--ink-2); text-align: center; margin: 0; }
+
+/* ---------- formulaires ---------- */
+.checkout { display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start; margin-top: 10px; }
+.box { border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+.box h2 { font-size: 17px; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+.box h2 .n { width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 13px; display: grid; place-items: center; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field { display: grid; gap: 5px; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-size: 12px; font-weight: 600; color: var(--ink-2); }
+.field input, .field select, .field textarea { border: 1px solid #d6d6d6; border-radius: 8px; padding: 11px 12px; background: #fff; outline: none; width: 100%; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ink); }
+.field textarea { min-height: 80px; resize: vertical; }
+.check { display: flex; gap: 8px; align-items: center; font-size: 13px; }
+.pay-methods { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.pay-method { position: relative; border: 1.5px solid var(--line); border-radius: 12px; padding: 12px; display: flex; gap: 10px; align-items: center; cursor: pointer; }
+.pay-method input { position: absolute; opacity: 0; }
+.pay-method.active { border-color: var(--ink); background: var(--bg-soft); }
+.pay-method .ico { font-size: 24px; }
+.pay-method small { display: block; color: var(--ink-3); font-size: 11px; }
+.notice { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 10px; padding: 10px 12px; font-size: 12px; color: #6b5300; }
+.notice.green { background: var(--green-soft); border-color: #b9e3d5; color: #0c5a46; }
+.mini-items { display: grid; gap: 8px; max-height: 260px; overflow: auto; }
+.mini-item { display: grid; grid-template-columns: 44px 1fr auto; gap: 10px; align-items: center; font-size: 12px; }
+.mini-item .cart-thumb { font-size: 22px; border-radius: 6px; }
+
+/* ---------- suivi ---------- */
+.success { text-align: center; padding: 30px 16px 10px; }
+.success .big { font-size: 70px; }
+.success h1 { margin: 6px 0; }
+.order-id { display: inline-block; background: var(--bg-soft); border-radius: 8px; padding: 6px 14px; font-weight: 800; letter-spacing: 1px; font-size: 18px; margin: 8px 0; }
+.timeline { display: grid; gap: 0; margin: 10px 0; }
+.tl { display: grid; grid-template-columns: 28px 1fr; gap: 10px; position: relative; padding-bottom: 18px; }
+.tl:not(:last-child)::before { content: ""; position: absolute; left: 13px; top: 26px; bottom: 0; width: 2px; background: var(--line); }
+.tl.done:not(:last-child)::before { background: var(--green); }
+.tl-dot { width: 28px; height: 28px; border-radius: 50%; background: var(--line); display: grid; place-items: center; font-size: 13px; color: #fff; }
+.tl.done .tl-dot { background: var(--green); }
+.tl.current .tl-dot { box-shadow: 0 0 0 5px var(--green-soft); }
+.tl b { display: block; }
+.tl small { color: var(--ink-3); }
+.status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--bg-soft); }
+.status-pill.payee, .status-pill.livree { background: var(--green-soft); color: var(--green); }
+.status-pill.en_attente { background: #fff4d6; color: #8a6100; }
+.status-pill.annulee { background: var(--sale-soft); color: var(--sale); }
+.status-pill.preparation, .status-pill.livraison { background: #e8f0ff; color: #1d4ed8; }
+.share-link { display: flex; gap: 8px; align-items: center; background: var(--bg-soft); border-radius: 10px; padding: 8px 8px 8px 14px; }
+.share-link code { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+.quote-bubble { background: var(--green-soft); border-radius: 0 14px 14px 14px; padding: 12px 14px; color: #0c5a46; position: relative; }
+
+/* ---------- admin ---------- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--bg-soft); font-size: 12px; color: var(--ink-2); }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
+.stat { background: var(--bg-soft); border-radius: 12px; padding: 14px; }
+.stat b { display: block; font-size: 22px; }
+
+/* ---------- FAQ ---------- */
+details { border-bottom: 1px solid var(--line); padding: 14px 0; }
+summary { font-weight: 700; cursor: pointer; }
+details p { color: var(--ink-2); margin: 8px 0 0; }
+
+/* ---------- modal & toast ---------- */
+.modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.5); animation: fade .2s; }
+.modal-card { position: relative; background: #fff; border-radius: 16px; width: min(560px, 100%); max-height: 90vh; overflow: auto; padding: 22px; animation: pop .2s ease; }
+@keyframes pop { from { transform: scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
+.modal-close { position: absolute; top: 10px; right: 12px; border: 0; background: none; font-size: 28px; line-height: 1; color: var(--ink-3); }
+.modal-card h2 { margin: 0 0 6px; font-size: 20px; }
+.toast { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; border-radius: 999px; padding: 10px 20px; font-size: 13px; opacity: 0; pointer-events: none; transition: all .25s; z-index: 120; white-space: nowrap; }
+.toast.show { opacity: 1; transform: translateX(-50%); }
+
+/* ---------- pied de page ---------- */
+.footer { background: #f4f4f4; margin-top: 40px; }
+.footer-inner { max-width: var(--max); margin: 0 auto; padding: 32px 16px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 24px; }
+.footer h4 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .6px; }
+.footer a, .footer span { display: block; color: var(--ink-2); font-size: 13px; margin: 5px 0; }
+.footer a:hover { color: var(--ink); }
+.footer p { color: var(--ink-2); font-size: 13px; }
+.logo-footer { margin-bottom: 6px; }
+.pay-logos { display: flex; flex-wrap: wrap; gap: 6px; }
+.pay-logos span { display: inline-block; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; font-weight: 700; font-size: 11px; margin: 0; color: var(--ink); }
+.footer-bottom span { display: inline; margin: 0; }
+.footer-bottom { text-align: center; font-size: 12px; color: var(--ink-3); padding: 14px; border-top: 1px solid #e4e4e4; }
+
+/* ---------- barre d'onglets mobile ---------- */
+.tabbar { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #fff; border-top: 1px solid var(--line); z-index: 40; padding-bottom: env(safe-area-inset-bottom); }
+.tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; color: var(--ink-3); position: relative; }
+.tabbar a span { font-size: 20px; line-height: 1.2; filter: grayscale(1); opacity: .7; }
+.tabbar a.active { color: var(--ink); font-weight: 700; }
+.tabbar a.active span { filter: none; opacity: 1; }
+.tab-badge { position: absolute; top: 4px; left: 54%; background: var(--sale); color: #fff; font-style: normal; font-size: 9px; font-weight: 700; min-width: 15px; height: 15px; border-radius: 8px; display: grid; place-items: center; padding: 0 3px; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+  .cat-circles { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .product, .cart-layout, .checkout { grid-template-columns: 1fr; }
+  .gallery, .summary { position: static; }
+  .grid { grid-template-columns: repeat(3, 1fr); }
+  .steps, .trust, .stats { grid-template-columns: repeat(2, 1fr); }
+  .share-cta { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  body { padding-bottom: 76px; }
+  .tabbar { display: flex; }
+  .hide-mobile { display: none; }
+  .header-inner { flex-wrap: wrap; gap: 8px; padding: 8px 16px; }
+  .logo { order: 1; }
+  .header-actions { order: 2; margin-left: auto; }
+  .search { order: 3; flex-basis: 100%; border-width: 1.5px; }
+  .search input { padding: 7px 14px; }
+  .logo-text { font-size: 16px; }
+  .toolbar { top: 140px; }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 16px 10px; }
+  .cat-circles { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px 6px; }
+  .cat-circle { font-size: 11px; }
+  .cat-circle span { font-size: 26px; }
+  .hero { aspect-ratio: auto; height: 230px; }
+  .slide { padding: 0 18px; }
+  .slide-text { max-width: 74%; }
+  .slide h1 { font-size: 22px; margin: 8px 0 6px; }
+  .slide p { font-size: 12.5px; margin-bottom: 12px; }
+  .slide small { font-size: 10px; }
+  .slide .btn { padding: 9px 16px; font-size: 13px; }
+  .slide-art { right: 10px; font-size: 64px; opacity: .9; }
+  .hero-dots { bottom: 8px; justify-content: flex-end; padding-right: 16px; }
+  .fields { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: 1fr; }
+  .thumbs { flex-direction: row; order: 2; }
+  .thumbs button { width: 56px; }
+  .steps { grid-template-columns: 1fr; }
+  .trust { grid-template-columns: 1fr 1fr; }
+  .trust div { flex-direction: column; text-align: center; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .cart-item { grid-template-columns: 72px 1fr; }
+  .cart-item-right { grid-column: 2; flex-direction: row; justify-content: space-between; align-items: center; }
+  .p-actions { position: fixed; bottom: 60px; left: 0; right: 0; margin: 0; padding: 10px 16px; background: #fff; border-top: 1px solid var(--line); z-index: 35; }
+  .product { padding-bottom: 70px; }
+}
+
+
+:root { color-scheme: light; }
+body { background: var(--bg); color: var(--ink); }
+.header { top: env(safe-area-inset-top, 0px); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: #fff; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+</style>
+<div class="promo-bar" id="promo-bar"><span>Livraison offerte dès 50 000 FCFA d'achat</span></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="#/" class="logo" aria-label="Accueil Panier du Pays">
+        <span class="logo-mark">🧺</span>
+        <span class="logo-text">PANIER<b>DU PAYS</b></span>
+      </a>
+      <form class="search" id="search-form" role="search">
+        <input type="search" id="search-input" placeholder="Manioc, pagne, chaussures, panier de Noël…" aria-label="Rechercher">
+        <button type="submit" aria-label="Lancer la recherche">
+          <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </form>
+      <div class="header-actions">
+        <select id="currency" class="currency" aria-label="Devise"></select>
+        <a href="#/suivi" class="icon-btn hide-mobile" title="Suivre une commande">
+          <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </a>
+        <a href="#/favoris" class="icon-btn hide-mobile" title="Mes favoris">
+          <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 20s-7-4.4-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.6-9 9-9 9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#/panier" class="icon-btn" title="Mon panier">
+          <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span class="badge" id="cart-count" hidden>0</span>
+        </a>
+      </div>
+    </div>
+    <nav class="cat-nav" id="cat-nav" aria-label="Catégories"></nav>
+  </header>
+
+  <main id="app" class="app"></main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="logo logo-footer"><span class="logo-mark">🧺</span><span class="logo-text">PANIER<b>DU PAYS</b></span></div>
+        <p>Le pont entre la diaspora et la famille au Cameroun. Vous choisissez, vous payez d'où vous êtes, nous livrons au pays.</p>
+      </div>
+      <div>
+        <h4>Aide</h4>
+        <a href="#/comment-ca-marche">Comment ça marche</a>
+        <a href="#/suivi">Suivre ma commande</a>
+        <a href="#/panier-partage">Le panier partagé</a>
+        <a href="#/faq">Questions fréquentes</a>
+      </div>
+      <div>
+        <h4>Livraison</h4>
+        <span>Yaoundé & Douala en 24 h</span>
+        <span>Toutes les régions en 48–96 h</span>
+        <span>Photo à la remise du colis</span>
+      </div>
+      <div>
+        <h4>Paiement sécurisé</h4>
+        <div class="pay-logos"><span>VISA</span><span>Mastercard</span><span>PayPal</span><span>Orange Money</span><span>MTN MoMo</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">Version de démonstration : les paiements sont simulés. Espace admin : <a href="#/admin" style="display:inline">#/admin</a> (clé « admin-panier »).<br>© <span id="year"></span> Panier du Pays · Fait avec ❤️ entre le Cameroun et le monde</div>
+  </footer>
+
+  <nav class="tabbar" aria-label="Navigation principale">
+    <a href="#/" data-tab="home"><span>🏠</span>Accueil</a>
+    <a href="#/categories" data-tab="categories"><span>🗂️</span>Catégories</a>
+    <a href="#/panier" data-tab="panier"><span>🛍️</span>Panier<i class="tab-badge" id="tab-cart-count" hidden>0</i></a>
+    <a href="#/favoris" data-tab="favoris"><span>🤍</span>Favoris</a>
+    <a href="#/suivi" data-tab="suivi"><span>👤</span>Moi</a>
+  </nav>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close aria-label="Fermer">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>window.PDP_CATALOG = {"categories":[{"slug":"vivres","name":"Vivres & Marché","emoji":"🥬","color":"#e8f5e9"},{"slug":"paniers","name":"Paniers tout prêts","emoji":"🧺","color":"#fff3e0"},{"slug":"femme","name":"Mode Femme","emoji":"👗","color":"#fce4ec"},{"slug":"homme","name":"Mode Homme","emoji":"👔","color":"#e3f2fd"},{"slug":"enfants","name":"Enfants & École","emoji":"🎒","color":"#f3e5f5"},{"slug":"chaussures","name":"Chaussures","emoji":"👟","color":"#efebe9"},{"slug":"fetes","name":"Fêtes & Cadeaux","emoji":"🎁","color":"#ffebee"},{"slug":"maison","name":"Maison & Électroménager","emoji":"🏠","color":"#e0f2f1"},{"slug":"telephones","name":"Téléphones & High-tech","emoji":"📱","color":"#e8eaf6"},{"slug":"beaute","name":"Beauté & Santé","emoji":"💄","color":"#fdf2f8"}],"products":[{"id":"manioc-frais","cat":"vivres","name":"Manioc frais du village","price":4500,"oldPrice":5500,"emoji":"🍠","rating":4.8,"reviews":812,"sold":2100,"tags":["flash","best"],"origin":"Marché Mfoundi, Yaoundé","options":[{"label":"Seau (≈ 10 kg)","price":4500},{"label":"Demi-sac (≈ 25 kg)","price":10000},{"label":"Sac (≈ 50 kg)","price":19000}],"optionLabel":"Quantité","description":"Tubercules de manioc récoltés la veille, livrés frais. Idéal pour le couscous, le bâton ou le foufou.","contents":null},{"id":"baton-manioc","cat":"vivres","name":"Bâtons de manioc (paquet de 10)","price":2500,"oldPrice":3000,"emoji":"🌿","rating":4.6,"reviews":540,"sold":1600,"tags":["best"],"origin":"Marché Mokolo, Yaoundé","options":[{"label":"10 bâtons","price":2500},{"label":"25 bâtons","price":6000},{"label":"50 bâtons","price":11500}],"optionLabel":"Quantité","description":"Bâtons de manioc emballés dans les feuilles, préparés à l'ancienne.","contents":null},{"id":"plantain","cat":"vivres","name":"Régime de plantain mûr","price":6000,"oldPrice":7500,"emoji":"🍌","rating":4.9,"reviews":1204,"sold":3200,"tags":["flash","best"],"origin":"Marché Sandaga, Douala","options":[{"label":"Moyen","price":6000},{"label":"Gros","price":8500},{"label":"2 gros régimes","price":16000}],"optionLabel":"Taille du régime","description":"Plantain bien choisi, mûr ou vert selon votre préférence (à préciser dans le message).","contents":null},{"id":"macabo","cat":"vivres","name":"Macabo / taro (filet)","price":5000,"oldPrice":null,"emoji":"🥔","rating":4.6,"reviews":180,"sold":640,"tags":[],"origin":"Marché de Bafoussam","options":[{"label":"Filet 5 kg","price":5000},{"label":"Filet 10 kg","price":9500}],"optionLabel":"Quantité","description":"","contents":null},{"id":"riz-25","cat":"vivres","name":"Riz parfumé — sac 25 kg","price":17500,"oldPrice":19500,"emoji":"🍚","rating":4.7,"reviews":1530,"sold":4100,"tags":["flash","best"],"origin":"Entrepôt Douala","options":[{"label":"5 kg","price":4000},{"label":"25 kg","price":17500},{"label":"50 kg","price":33000}],"optionLabel":"Format","description":"Riz long grain parfumé, sac scellé. Le cadeau le plus demandé par les familles.","contents":null},{"id":"huile-rouge","cat":"vivres","name":"Huile de palme rouge artisanale","price":3500,"oldPrice":4000,"emoji":"🫙","rating":4.6,"reviews":360,"sold":980,"tags":[],"origin":"Mbanga","options":[{"label":"1,5 L","price":3500},{"label":"5 L","price":10500},{"label":"20 L (bidon)","price":38000}],"optionLabel":"Contenance","description":"","contents":null},{"id":"huile-raffinee","cat":"vivres","name":"Huile raffinée — bidon 5 L","price":9500,"oldPrice":10500,"emoji":"🧴","rating":4.6,"reviews":410,"sold":1500,"tags":[],"origin":"Entrepôt Douala","options":null,"optionLabel":null,"description":"","contents":null},{"id":"ndole","cat":"vivres","name":"Ndolè lavé prêt à cuisiner","price":2000,"oldPrice":null,"emoji":"🥬","rating":4.8,"reviews":260,"sold":720,"tags":["new"],"origin":"Marché Mvog-Mbi, Yaoundé","options":[{"label":"1 kg","price":2000},{"label":"3 kg","price":5500}],"optionLabel":"Quantité","description":"","contents":null},{"id":"arachides","cat":"vivres","name":"Arachides décortiquées","price":3000,"oldPrice":null,"emoji":"🥜","rating":4.6,"reviews":290,"sold":870,"tags":[],"origin":"Garoua","options":[{"label":"2 kg","price":3000},{"label":"5 kg","price":7000},{"label":"10 kg","price":13000}],"optionLabel":"Quantité","description":"","contents":null},{"id":"poisson-fume","cat":"vivres","name":"Poisson fumé (bar / maquereau)","price":5000,"oldPrice":6000,"emoji":"🐟","rating":4.6,"reviews":390,"sold":1100,"tags":["flash"],"origin":"Kribi","options":[{"label":"1 kg","price":5000},{"label":"3 kg","price":14000}],"optionLabel":"Quantité","description":"","contents":null},{"id":"viande-boeuf","cat":"vivres","name":"Viande de bœuf fraîche","price":4800,"oldPrice":null,"emoji":"🥩","rating":4.6,"reviews":420,"sold":1300,"tags":[],"origin":"Boucherie Mvog-Ada, Yaoundé","options":[{"label":"1 kg","price":4800},{"label":"3 kg","price":14000},{"label":"5 kg","price":23000}],"optionLabel":"Quantité","description":"Livrée le jour même, sous glace.","contents":null},{"id":"poulet","cat":"vivres","name":"Poulet du pays vivant","price":6500,"oldPrice":7000,"emoji":"🐓","rating":4.8,"reviews":760,"sold":2300,"tags":["best"],"origin":"Ferme de Mbalmayo","options":[{"label":"1 poulet","price":6500},{"label":"3 poulets","price":18500},{"label":"5 poulets","price":30000}],"optionLabel":"Nombre","description":"","contents":null},{"id":"chevre","cat":"vivres","name":"Chèvre / cabri pour la fête","price":45000,"oldPrice":50000,"emoji":"🐐","rating":4.6,"reviews":64,"sold":210,"tags":["flash"],"origin":"Marché à bétail de Ngaoundéré","options":[{"label":"Moyenne","price":45000},{"label":"Grosse","price":65000}],"optionLabel":"Taille","description":"","contents":null},{"id":"oignons","cat":"vivres","name":"Oignons — filet","price":4000,"oldPrice":null,"emoji":"🧅","rating":4.6,"reviews":120,"sold":520,"tags":[],"origin":"Maroua","options":[{"label":"5 kg","price":4000},{"label":"25 kg","price":17000}],"optionLabel":"Quantité","description":"","contents":null},{"id":"sucre","cat":"vivres","name":"Sucre en morceaux (carton)","price":12000,"oldPrice":13000,"emoji":"🍬","rating":4.6,"reviews":120,"sold":640,"tags":[],"origin":"Entrepôt Douala","options":null,"optionLabel":null,"description":"","contents":null},{"id":"cube-maggi","cat":"vivres","name":"Cubes d'assaisonnement (boîte de 100)","price":2500,"oldPrice":null,"emoji":"🧂","rating":4.6,"reviews":210,"sold":1900,"tags":[],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"panier-marche","cat":"paniers","name":"Panier « Marché de la semaine »","price":35000,"oldPrice":42000,"emoji":"🧺","rating":4.9,"reviews":690,"sold":1850,"tags":["flash","best"],"origin":"Préparé à Yaoundé ou Douala","options":null,"optionLabel":null,"description":"Tout le nécessaire pour nourrir une famille pendant une semaine. Livré en une seule fois.","contents":["Régime de plantain","Demi-sac de manioc","3 kg de viande","2 kg d'arachides","Huile rouge 1,5 L","Ndolè 1 kg","Tomates, oignons, piment"]},{"id":"panier-noel","cat":"paniers","name":"Panier de Noël & Nouvel An","price":75000,"oldPrice":89000,"emoji":"🎄","rating":4.9,"reviews":312,"sold":940,"tags":["flash","new"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"Le panier pour que la famille fête comme si vous étiez là.","contents":["Poulet du pays ×2","Riz parfumé 5 kg","Huile 5 L","Vin mousseux ×2","Jus et sucreries","Chocolats","Carte de vœux personnalisée"]},{"id":"panier-rentree","cat":"paniers","name":"Kit Rentrée scolaire complet","price":28000,"oldPrice":33000,"emoji":"📚","rating":4.6,"reviews":450,"sold":1200,"tags":["best"],"origin":"Yaoundé","options":[{"label":"Maternelle","price":22000},{"label":"Primaire","price":28000},{"label":"Secondaire","price":36000}],"optionLabel":"Niveau","description":"","contents":["Cartable","Cahiers selon la liste","Stylos, crayons, règle","Gourde & boîte à goûter","Tenue de sport"]},{"id":"panier-maman","cat":"paniers","name":"Panier « Bonne fête Maman »","price":45000,"oldPrice":52000,"emoji":"💐","rating":4.6,"reviews":120,"sold":380,"tags":["new"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":["Pagne de fête 6 yards","Bouquet de fleurs","Coffret beauté","Gâteau 8 parts","Carte personnalisée"]},{"id":"panier-sante","cat":"paniers","name":"Kit Santé & Hygiène famille","price":25000,"oldPrice":29000,"emoji":"🩺","rating":4.6,"reviews":88,"sold":290,"tags":[],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":["Moustiquaires imprégnées ×2","Savons & dentifrice","Paracétamol, SRO","Thermomètre","Gel hydroalcoolique"]},{"id":"panier-naissance","cat":"paniers","name":"Panier Naissance / Bébé","price":55000,"oldPrice":62000,"emoji":"👶","rating":4.9,"reviews":51,"sold":175,"tags":[],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":["Couches (2 paquets)","Lait infantile ×3","Layette 0-6 mois","Porte-bébé en pagne","Kit de toilette bébé"]},{"id":"kaba-ngondo","cat":"femme","name":"Kaba Ngondo brodé","price":18000,"oldPrice":25000,"emoji":"👘","rating":4.8,"reviews":520,"sold":1400,"tags":["flash","best"],"origin":"Atelier Akwa, Douala","options":[{"label":"S"},{"label":"M"},{"label":"L"},{"label":"XL"},{"label":"XXL"},{"label":"3XL"}],"optionLabel":"Taille","description":"Le kaba traditionnel sawa, brodé main, coupe ample et confortable.","contents":null},{"id":"robe-pagne","cat":"femme","name":"Robe longue en pagne wax","price":15000,"oldPrice":20000,"emoji":"👗","rating":4.6,"reviews":340,"sold":980,"tags":["new","best"],"origin":"Yaoundé","options":[{"label":"S"},{"label":"M"},{"label":"L"},{"label":"XL"},{"label":"XXL"},{"label":"3XL"}],"optionLabel":"Taille","description":"","contents":null},{"id":"pagne-6y","cat":"femme","name":"Pagne de fête 6 yards","price":12000,"oldPrice":14000,"emoji":"🧣","rating":4.7,"reviews":870,"sold":2600,"tags":["best"],"origin":"Marché Central, Yaoundé","options":[{"label":"Pagne 8 mars"},{"label":"Wax hollandais"},{"label":"Bazin"},{"label":"Pagne du 20 mai"}],"optionLabel":"Motif","description":"","contents":null},{"id":"ensemble-femme","cat":"femme","name":"Ensemble jupe & haut en pagne","price":22000,"oldPrice":27000,"emoji":"💃","rating":4.6,"reviews":130,"sold":410,"tags":[],"origin":"Yaoundé","options":[{"label":"S"},{"label":"M"},{"label":"L"},{"label":"XL"},{"label":"XXL"},{"label":"3XL"}],"optionLabel":"Taille","description":"","contents":null},{"id":"sac-main","cat":"femme","name":"Sac à main tressé","price":9500,"oldPrice":12000,"emoji":"👜","rating":4.6,"reviews":190,"sold":620,"tags":["flash"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"foulard","cat":"femme","name":"Foulard / attache en wax","price":3000,"oldPrice":null,"emoji":"🎀","rating":4.6,"reviews":280,"sold":1100,"tags":[],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"chemise-pagne","cat":"homme","name":"Chemise manches courtes en pagne","price":12000,"oldPrice":15000,"emoji":"👕","rating":4.6,"reviews":480,"sold":1500,"tags":["best"],"origin":"Yaoundé","options":[{"label":"S"},{"label":"M"},{"label":"L"},{"label":"XL"},{"label":"XXL"},{"label":"3XL"}],"optionLabel":"Taille","description":"","contents":null},{"id":"boubou-homme","cat":"homme","name":"Boubou / gandoura brodé","price":25000,"oldPrice":32000,"emoji":"🥻","rating":4.6,"reviews":170,"sold":530,"tags":["flash"],"origin":"Atelier de Garoua","options":[{"label":"S"},{"label":"M"},{"label":"L"},{"label":"XL"},{"label":"XXL"},{"label":"3XL"}],"optionLabel":"Taille","description":"","contents":null},{"id":"costume","cat":"homme","name":"Costume 2 pièces sur mesure","price":65000,"oldPrice":80000,"emoji":"🤵","rating":4.7,"reviews":45,"sold":140,"tags":[],"origin":"Yaoundé","options":[{"label":"S"},{"label":"M"},{"label":"L"},{"label":"XL"},{"label":"XXL"},{"label":"3XL"}],"optionLabel":"Taille","description":"Le tailleur appelle le bénéficiaire pour prendre les mesures. Livré en 10 jours.","contents":null},{"id":"maillot-lions","cat":"homme","name":"Maillot de football vert-rouge-jaune","price":10000,"oldPrice":15000,"emoji":"⚽","rating":4.6,"reviews":950,"sold":3100,"tags":["flash","best"],"origin":"Yaoundé","options":[{"label":"S"},{"label":"M"},{"label":"L"},{"label":"XL"},{"label":"XXL"},{"label":"3XL"}],"optionLabel":"Taille","description":"","contents":null},{"id":"polo-homme","cat":"homme","name":"Polo coton premium","price":7500,"oldPrice":9000,"emoji":"👔","rating":4.6,"reviews":120,"sold":760,"tags":[],"origin":"Yaoundé","options":[{"label":"S"},{"label":"M"},{"label":"L"},{"label":"XL"},{"label":"XXL"},{"label":"3XL"}],"optionLabel":"Taille","description":"","contents":null},{"id":"uniforme","cat":"enfants","name":"Uniforme scolaire (sur mesure)","price":8000,"oldPrice":null,"emoji":"🧒","rating":4.6,"reviews":600,"sold":1800,"tags":["best"],"origin":"Yaoundé","options":[{"label":"3-4 ans"},{"label":"5-6 ans"},{"label":"7-8 ans"},{"label":"9-10 ans"},{"label":"11-12 ans"},{"label":"13-14 ans"}],"optionLabel":"Âge","description":"Préciser le nom de l'école dans le message : nous respectons les couleurs officielles.","contents":null},{"id":"cartable","cat":"enfants","name":"Cartable renforcé","price":9000,"oldPrice":11000,"emoji":"🎒","rating":4.6,"reviews":410,"sold":1300,"tags":["flash"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"robe-fillette","cat":"enfants","name":"Robe de fête fillette en pagne","price":9500,"oldPrice":12000,"emoji":"👧","rating":4.6,"reviews":160,"sold":520,"tags":["new"],"origin":"Yaoundé","options":[{"label":"3-4 ans"},{"label":"5-6 ans"},{"label":"7-8 ans"},{"label":"9-10 ans"},{"label":"11-12 ans"},{"label":"13-14 ans"}],"optionLabel":"Âge","description":"","contents":null},{"id":"ensemble-garcon","cat":"enfants","name":"Ensemble garçon chemise + pantalon","price":11000,"oldPrice":13500,"emoji":"👦","rating":4.6,"reviews":120,"sold":450,"tags":[],"origin":"Yaoundé","options":[{"label":"3-4 ans"},{"label":"5-6 ans"},{"label":"7-8 ans"},{"label":"9-10 ans"},{"label":"11-12 ans"},{"label":"13-14 ans"}],"optionLabel":"Âge","description":"","contents":null},{"id":"jouets","cat":"enfants","name":"Coffret de jouets éducatifs","price":15000,"oldPrice":18000,"emoji":"🧸","rating":4.6,"reviews":90,"sold":300,"tags":[],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"escarpins","cat":"chaussures","name":"Escarpins de fête","price":14000,"oldPrice":18000,"emoji":"👠","rating":4.6,"reviews":230,"sold":690,"tags":["flash"],"origin":"Yaoundé","options":[{"label":"36"},{"label":"37"},{"label":"38"},{"label":"39"},{"label":"40"},{"label":"41"},{"label":"42"}],"optionLabel":"Pointure","description":"","contents":null},{"id":"sandales-femme","cat":"chaussures","name":"Sandales confort femme","price":7000,"oldPrice":9000,"emoji":"👡","rating":4.6,"reviews":380,"sold":1200,"tags":["best"],"origin":"Yaoundé","options":[{"label":"36"},{"label":"37"},{"label":"38"},{"label":"39"},{"label":"40"},{"label":"41"},{"label":"42"}],"optionLabel":"Pointure","description":"","contents":null},{"id":"mocassins","cat":"chaussures","name":"Mocassins cuir homme","price":18000,"oldPrice":24000,"emoji":"👞","rating":4.7,"reviews":300,"sold":870,"tags":["best"],"origin":"Yaoundé","options":[{"label":"39"},{"label":"40"},{"label":"41"},{"label":"42"},{"label":"43"},{"label":"44"},{"label":"45"},{"label":"46"}],"optionLabel":"Pointure","description":"","contents":null},{"id":"baskets","cat":"chaussures","name":"Baskets tendance unisexe","price":16000,"oldPrice":22000,"emoji":"👟","rating":4.6,"reviews":520,"sold":1500,"tags":["flash","new"],"origin":"Yaoundé","options":[{"label":"39"},{"label":"40"},{"label":"41"},{"label":"42"},{"label":"43"},{"label":"44"},{"label":"45"},{"label":"46"}],"optionLabel":"Pointure","description":"","contents":null},{"id":"chaussures-enfant","cat":"chaussures","name":"Chaussures enfant (fête / école)","price":8000,"oldPrice":10000,"emoji":"🥿","rating":4.6,"reviews":270,"sold":980,"tags":[],"origin":"Yaoundé","options":[{"label":"24"},{"label":"26"},{"label":"28"},{"label":"30"},{"label":"32"},{"label":"34"},{"label":"36"}],"optionLabel":"Pointure","description":"","contents":null},{"id":"gateau","cat":"fetes","name":"Gâteau d'anniversaire personnalisé","price":15000,"oldPrice":null,"emoji":"🎂","rating":4.9,"reviews":430,"sold":1100,"tags":["best"],"origin":"Pâtisserie Bastos, Yaoundé","options":[{"label":"8 parts","price":15000},{"label":"15 parts","price":25000},{"label":"30 parts","price":45000}],"optionLabel":"Taille","description":"Indiquez le prénom et l'âge dans le message cadeau.","contents":null},{"id":"bouquet","cat":"fetes","name":"Bouquet de fleurs fraîches","price":12000,"oldPrice":15000,"emoji":"💐","rating":4.6,"reviews":250,"sold":760,"tags":["flash"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"champagne","cat":"fetes","name":"Coffret vin mousseux ×2","price":18000,"oldPrice":21000,"emoji":"🍾","rating":4.6,"reviews":110,"sold":420,"tags":[],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"casiers-boissons","cat":"fetes","name":"Casiers de boissons (bière / jus)","price":13500,"oldPrice":null,"emoji":"🍻","rating":4.6,"reviews":520,"sold":1900,"tags":["best"],"origin":"Yaoundé","options":[{"label":"1 casier","price":13500},{"label":"3 casiers","price":39000},{"label":"10 casiers","price":125000}],"optionLabel":"Quantité","description":"Pour les mariages, deuils, baptêmes et dots. Livraison sur le lieu de l'événement.","contents":null},{"id":"carte-cadeau","cat":"fetes","name":"Carte cadeau Panier du Pays","price":10000,"oldPrice":null,"emoji":"💳","rating":4.6,"reviews":120,"sold":650,"tags":["new"],"origin":"Yaoundé","options":[{"label":"10 000 FCFA","price":10000},{"label":"25 000 FCFA","price":25000},{"label":"50 000 FCFA","price":50000},{"label":"100 000 FCFA","price":100000}],"optionLabel":"Montant","description":"Votre proche choisit lui-même ses articles sur le site.","contents":null},{"id":"bouteille-gaz","cat":"maison","name":"Recharge / bouteille de gaz","price":6500,"oldPrice":null,"emoji":"🔥","rating":4.6,"reviews":910,"sold":2800,"tags":["best"],"origin":"Yaoundé","options":[{"label":"Recharge 12,5 kg","price":6500},{"label":"Bouteille neuve + gaz","price":25000}],"optionLabel":"Format","description":"","contents":null},{"id":"ventilateur","cat":"maison","name":"Ventilateur sur pied","price":22000,"oldPrice":28000,"emoji":"🌀","rating":4.6,"reviews":260,"sold":830,"tags":["flash"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"refrigerateur","cat":"maison","name":"Réfrigérateur 2 portes 200 L","price":245000,"oldPrice":290000,"emoji":"🧊","rating":4.5,"reviews":40,"sold":120,"tags":[],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"matelas","cat":"maison","name":"Matelas mousse haute densité","price":55000,"oldPrice":70000,"emoji":"🛏️","rating":4.6,"reviews":95,"sold":340,"tags":[],"origin":"Yaoundé","options":[{"label":"1 place","price":45000},{"label":"2 places","price":55000},{"label":"2 places XL","price":72000}],"optionLabel":"Dimensions","description":"","contents":null},{"id":"marmites","cat":"maison","name":"Lot de marmites en aluminium","price":18000,"oldPrice":22000,"emoji":"🍲","rating":4.6,"reviews":210,"sold":690,"tags":["best"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"panneau-solaire","cat":"maison","name":"Kit solaire + lampes","price":85000,"oldPrice":99000,"emoji":"☀️","rating":4.6,"reviews":42,"sold":150,"tags":["new"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"smartphone","cat":"telephones","name":"Smartphone Android 128 Go","price":85000,"oldPrice":105000,"emoji":"📱","rating":4.5,"reviews":380,"sold":960,"tags":["flash","best"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"telephone-simple","cat":"telephones","name":"Téléphone simple double SIM","price":12000,"oldPrice":15000,"emoji":"☎️","rating":4.6,"reviews":300,"sold":1100,"tags":[],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"television","cat":"telephones","name":"Téléviseur LED 43\"","price":165000,"oldPrice":195000,"emoji":"📺","rating":4.6,"reviews":70,"sold":210,"tags":[],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"powerbank","cat":"telephones","name":"Batterie externe 20 000 mAh","price":12000,"oldPrice":16000,"emoji":"🔋","rating":4.6,"reviews":420,"sold":1400,"tags":["flash"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"forfait","cat":"telephones","name":"Recharge crédit & forfait internet","price":5000,"oldPrice":null,"emoji":"📶","rating":4.6,"reviews":640,"sold":3500,"tags":[],"origin":"Yaoundé","options":[{"label":"5 000 FCFA","price":5000},{"label":"10 000 FCFA","price":10000},{"label":"25 000 FCFA","price":25000}],"optionLabel":"Montant","description":"Crédit envoyé directement sur le numéro du bénéficiaire.","contents":null},{"id":"meches","cat":"beaute","name":"Mèches & tresses (paquets)","price":6000,"oldPrice":7500,"emoji":"💇🏾‍♀️","rating":4.6,"reviews":560,"sold":1700,"tags":["best"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"coiffure","cat":"beaute","name":"Séance de coiffure à domicile","price":10000,"oldPrice":null,"emoji":"✂️","rating":4.6,"reviews":150,"sold":420,"tags":["new"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"beurre-karite","cat":"beaute","name":"Beurre de karité pur","price":3500,"oldPrice":null,"emoji":"🧴","rating":4.6,"reviews":260,"sold":900,"tags":[],"origin":"Ngaoundéré","options":null,"optionLabel":null,"description":"","contents":null},{"id":"coffret-beaute","cat":"beaute","name":"Coffret beauté & parfum","price":20000,"oldPrice":26000,"emoji":"💄","rating":4.6,"reviews":120,"sold":380,"tags":["flash"],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null},{"id":"moustiquaire","cat":"beaute","name":"Moustiquaire imprégnée","price":4500,"oldPrice":null,"emoji":"🦟","rating":4.6,"reviews":330,"sold":1300,"tags":[],"origin":"Yaoundé","options":null,"optionLabel":null,"description":"","contents":null}],"cities":[{"name":"Yaoundé","fee":1500,"days":"24 h"},{"name":"Douala","fee":1500,"days":"24 h"},{"name":"Bafoussam","fee":2500,"days":"48 h"},{"name":"Dschang","fee":2500,"days":"48 h"},{"name":"Buea","fee":2500,"days":"48 h"},{"name":"Limbé","fee":2500,"days":"48 h"},{"name":"Kribi","fee":3000,"days":"48 h"},{"name":"Ebolowa","fee":3000,"days":"48 h"},{"name":"Bamenda","fee":3000,"days":"48–72 h"},{"name":"Kumba","fee":3000,"days":"48–72 h"},{"name":"Bertoua","fee":3500,"days":"72 h"},{"name":"Ngaoundéré","fee":4000,"days":"72 h"},{"name":"Garoua","fee":4000,"days":"72 h"},{"name":"Maroua","fee":4500,"days":"72–96 h"},{"name":"Autre ville / village","fee":6000,"days":"3–5 jours"}],"currencies":{"XAF":{"symbol":"FCFA","rate":1,"decimals":0},"EUR":{"symbol":"€","rate":655.957,"decimals":2},"USD":{"symbol":"$","rate":600,"decimals":2},"CAD":{"symbol":"CA$","rate":440,"decimals":2},"GBP":{"symbol":"£","rate":780,"decimals":2},"CHF":{"symbol":"CHF","rate":690,"decimals":2}},"serviceFeeRate":0.03,"freeDeliveryFrom":50000};</script>
+<script>
+/* API simulée dans le navigateur pour la version de démonstration (sans serveur).
+   Reprend les règles de server.js ; les données restent dans le navigateur du visiteur. */
+(() => {
+  'use strict';
+  const C = window.PDP_CATALOG;
+  const KEY = 'pdp_demo_db';
+  let mem = { orders: [], sharedCarts: [] };
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || mem; } catch { return mem; } };
+  const save = (db) => { mem = db; try { localStorage.setItem(KEY, JSON.stringify(db)); } catch { /* mémoire seule */ } };
+
+  const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const code = (n) => Array.from(crypto.getRandomValues(new Uint8Array(n)), (b) => ALPHABET[b % ALPHABET.length]).join('');
+  const str = (v, max = 300) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+  const fail = (message) => { throw new Error(message); };
+  const byId = new Map(C.products.map((x) => [x.id, x]));
+  const STATUSES = { en_attente: 'En attente de paiement', payee: 'Payée', preparation: 'En préparation', livraison: 'En cours de livraison', livree: 'Livrée', annulee: 'Annulée' };
+  const pub = (o) => ({ ...o, statusLabel: STATUSES[o.status] || o.status });
+
+  function priceItems(raw) {
+    if (!Array.isArray(raw) || !raw.length) fail('Le panier est vide.');
+    return raw.map((r) => {
+      const p = byId.get(r && r.id) || fail('Article inconnu.');
+      const qty = Math.floor(Number(r.qty));
+      if (!(qty >= 1 && qty <= 99)) fail('Quantité invalide.');
+      let option = null;
+      let unit = p.price;
+      if (p.options) {
+        const o = p.options.find((x) => x.label === r.option) || p.options[0];
+        option = o.label;
+        if (o.price) unit = o.price;
+      }
+      return { id: p.id, name: p.name, emoji: p.emoji, option, optionLabel: p.optionLabel, qty, unit, total: unit * qty };
+    });
+  }
+  function quote(raw, cityName) {
+    const items = priceItems(raw);
+    const subtotal = items.reduce((s, i) => s + i.total, 0);
+    const city = C.cities.find((c) => c.name === cityName) || null;
+    const delivery = !city ? 0 : subtotal >= C.freeDeliveryFrom ? 0 : city.fee;
+    const service = Math.round(subtotal * C.serviceFeeRate);
+    return { items, subtotal, delivery, service, total: subtotal + delivery + service, city: city && city.name, deliveryDelay: city && city.days };
+  }
+
+  const routes = [
+    ['GET', /^\/api\/catalog$/, () => C],
+    ['POST', /^\/api\/shared-carts$/, (b) => {
+      const db = load();
+      const q = quote(b.items, b.recipient && b.recipient.city);
+      const name = str(b.requester && b.requester.name, 80) || fail('Indiquez votre nom.');
+      const phone = str(b.requester.phone, 30);
+      const cart = {
+        code: code(6), createdAt: new Date().toISOString(), status: 'en_attente',
+        requester: { name, phone, payerName: str(b.requester.payerName, 80) },
+        message: str(b.message, 600),
+        recipient: { name: str(b.recipient && b.recipient.name, 80) || name, phone: str(b.recipient && b.recipient.phone, 30) || phone, city: q.city || '', quarter: str(b.recipient && b.recipient.quarter, 120), address: '' },
+        items: q.items.map(({ id, option, qty }) => ({ id, option, qty })), orderId: null,
+      };
+      db.sharedCarts.push(cart);
+      save(db);
+      return { code: cart.code };
+    }],
+    ['GET', /^\/api\/shared-carts\/([A-Z0-9]{4,12})$/, (b, m) => {
+      const db = load();
+      const cart = db.sharedCarts.find((c) => c.code === m[1].toUpperCase()) || fail('Panier partagé introuvable.');
+      const order = cart.orderId && db.orders.find((o) => o.id === cart.orderId);
+      return { ...cart, quote: quote(cart.items, cart.recipient.city), order: order ? pub(order) : null };
+    }],
+    ['POST', /^\/api\/orders$/, (b) => {
+      const db = load();
+      const r = b.recipient || {};
+      const recipient = { name: str(r.name, 80), phone: str(r.phone, 30), city: str(r.city, 60), quarter: str(r.quarter, 120), address: str(r.address, 300), date: str(r.date, 20) };
+      if (!recipient.name || !recipient.phone || !recipient.city) fail('Nom, téléphone et ville du bénéficiaire sont obligatoires.');
+      const p = b.payer || {};
+      const payer = { name: str(p.name, 80), email: str(p.email, 120), phone: str(p.phone, 30), country: str(p.country, 60) };
+      if (!payer.name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(payer.email)) fail('Nom et e-mail valides du payeur obligatoires.');
+      let shared = null;
+      if (b.sharedCode) {
+        shared = db.sharedCarts.find((c) => c.code === b.sharedCode) || fail('Panier partagé introuvable.');
+        if (shared.orderId) fail('Ce panier a déjà été payé.');
+      }
+      const now = new Date().toISOString();
+      const status = b.paymentMethod === 'virement' ? 'en_attente' : 'payee';
+      const order = {
+        id: 'PDP-' + code(6), createdAt: now, status, paymentMethod: b.paymentMethod, currency: b.currency,
+        recipient, payer, giftMessage: str(b.giftMessage, 600), anonymous: !!b.anonymous, sharedCode: shared ? shared.code : null,
+        ...quote(b.items, recipient.city), history: [{ status, at: now }],
+      };
+      db.orders.push(order);
+      if (shared) { shared.orderId = order.id; shared.status = 'payee'; }
+      save(db);
+      return pub(order);
+    }],
+    ['GET', /^\/api\/orders\/(PDP-[A-Z0-9]{6})$/i, (b, m) => pub(load().orders.find((o) => o.id === m[1].toUpperCase()) || fail('Commande introuvable.'))],
+    ['GET', /^\/api\/admin\/orders$/, (b, m, h) => {
+      if (h['x-admin-key'] !== 'admin-panier') fail('Clé incorrecte. En démonstration, la clé est : admin-panier');
+      const db = load();
+      return { orders: db.orders.slice().reverse().map(pub), sharedCarts: db.sharedCarts.slice().reverse(), statuses: STATUSES };
+    }],
+    ['PATCH', /^\/api\/admin\/orders\/(PDP-[A-Z0-9]{6})$/i, (b, m, h) => {
+      if (h['x-admin-key'] !== 'admin-panier') fail('Accès administrateur refusé.');
+      const db = load();
+      const o = db.orders.find((x) => x.id === m[1].toUpperCase()) || fail('Commande introuvable.');
+      if (!STATUSES[b.status]) fail('Statut invalide.');
+      o.status = b.status;
+      o.history.push({ status: b.status, at: new Date().toISOString() });
+      save(db);
+      return pub(o);
+    }],
+  ];
+
+  window.PDP_API = async (path, opts = {}) => {
+    const method = opts.method || 'GET';
+    const route = routes.find(([m, re]) => m === method && re.test(path)) || fail('Route inconnue.');
+    const body = JSON.parse(JSON.stringify(opts.body || {}));
+    return route[2](body, path.match(route[1]), opts.headers || {});
+  };
+})();
+
+</script>
+<script>
+/* Panier du Pays — application monopage (sans framework). */
+(() => {
+  'use strict';
+
+  // ================================================================ état
+  const S = {
+    catalog: null,
+    cart: load('pdp_cart', []), // [{ id, option, qty }]
+    favs: load('pdp_favs', []),
+    currency: load('pdp_currency', guessCurrency()),
+    orders: load('pdp_orders', []), // numéros des commandes passées sur cet appareil
+    shared: load('pdp_shared', []), // codes des paniers partagés créés sur cet appareil
+    checkoutSource: null, // { sharedCode, items, recipient } quand on paie un panier partagé
+  };
+
+  function load(key, fallback) {
+    try {
+      const v = JSON.parse(localStorage.getItem(key));
+      return v == null ? fallback : v;
+    } catch {
+      return fallback;
+    }
+  }
+  function save(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* stockage indisponible */ }
+  }
+  function guessCurrency() {
+    const lang = (navigator.language || 'fr-FR').toUpperCase();
+    if (/-(US)$/.test(lang)) return 'USD';
+    if (/-(CA)$/.test(lang)) return 'CAD';
+    if (/-(GB)$/.test(lang)) return 'GBP';
+    if (/-(CH)$/.test(lang)) return 'CHF';
+    if (/-(CM)$/.test(lang)) return 'XAF';
+    return 'EUR';
+  }
+
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const app = $('#app');
+
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  // ================================================================ API
+  async function api(path, opts = {}) {
+    // version de démonstration (sans serveur) : l'API est simulée dans le navigateur
+    if (window.PDP_API) return window.PDP_API(path, opts);
+    const res = await fetch(path, {
+      method: opts.method || 'GET',
+      headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) },
+      body: opts.body ? JSON.stringify(opts.body) : undefined,
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Une erreur est survenue.');
+    return data;
+  }
+
+  // ================================================================ prix
+  function money(xaf, cur = S.currency) {
+    const c = S.catalog.currencies[cur] || S.catalog.currencies.XAF;
+    const v = xaf / c.rate;
+    if (cur === 'XAF') return Math.round(v).toLocaleString('fr-FR').replace(/ | /g, ' ') + ' FCFA';
+    const n = v.toLocaleString('fr-FR', { minimumFractionDigits: c.decimals, maximumFractionDigits: c.decimals });
+    return ['€', 'CHF'].includes(c.symbol) ? `${n} ${c.symbol}` : `${c.symbol}${n}`;
+  }
+  const dual = (xaf) => (S.currency === 'XAF' ? money(xaf) : `${money(xaf)} · ${money(xaf, 'XAF')}`);
+  const pct = (prod) => (prod.oldPrice ? Math.round((1 - prod.price / prod.oldPrice) * 100) : 0);
+  const kfmt = (n) => (n >= 1000 ? (n / 1000).toFixed(1).replace('.0', '').replace('.', ',') + 'k' : String(n));
+
+  function unitPrice(prod, optLabel) {
+    if (!prod.options) return prod.price;
+    const o = prod.options.find((x) => x.label === optLabel) || prod.options[0];
+    return o.price || prod.price;
+  }
+
+  // prix barré cohérent avec l'option choisie (même remise que le prix de base)
+  function oldUnit(prod, optLabel) {
+    if (!prod.oldPrice) return null;
+    return Math.round((unitPrice(prod, optLabel) * prod.oldPrice) / prod.price / 100) * 100;
+  }
+
+  // ================================================================ produits
+  const byId = (id) => S.catalog.products.find((x) => x.id === id);
+  const catOf = (slug) => S.catalog.categories.find((c) => c.slug === slug);
+  const bg = (prod) => {
+    const c = catOf(prod.cat);
+    return `background:linear-gradient(160deg, ${c ? c.color : '#f4f4f4'} 0%, #fafafa 100%)`;
+  };
+  const stars = (r) => '★★★★★'.slice(0, Math.round(r)) + '☆☆☆☆☆'.slice(0, 5 - Math.round(r));
+
+  function card(prod, { flash = false } = {}) {
+    const off = pct(prod);
+    const fav = S.favs.includes(prod.id);
+    const tags = [];
+    if (off) tags.push(`<span class="tag">-${off}%</span>`);
+    else if (prod.tags.includes('new')) tags.push('<span class="tag new">Nouveau</span>');
+    else if (prod.tags.includes('best')) tags.push('<span class="tag best">Top vente</span>');
+    const soldPct = Math.min(95, 40 + (prod.sold % 55));
+    return `
+      <article class="card">
+        <div class="card-media">
+          <a href="#/produit/${prod.id}" class="card-img" style="${bg(prod)}" aria-label="${esc(prod.name)}">
+            <span class="emoji">${prod.emoji}</span>
+            ${tags.join('')}
+          </a>
+          <button class="fav" data-fav="${prod.id}" aria-label="Ajouter aux favoris">${fav ? '❤️' : '🤍'}</button>
+          <button class="quick-add" data-quick="${prod.id}" aria-label="Ajouter au panier">+</button>
+        </div>
+        <a href="#/produit/${prod.id}" class="card-name">${esc(prod.name)}</a>
+        <div class="price-row">
+          <span class="price ${off ? 'sale' : ''}">${money(prod.price)}</span>
+          ${prod.oldPrice ? `<span class="old">${money(prod.oldPrice)}</span>` : ''}
+        </div>
+        ${flash
+          ? `<div class="sold-bar"><i style="width:${soldPct}%"></i></div><div class="meta">${soldPct}% déjà vendus</div>`
+          : `<div class="meta"><span class="stars">${stars(prod.rating)}</span><span>(${kfmt(prod.reviews)})</span><span>· ${kfmt(prod.sold)} vendus</span></div>`}
+      </article>`;
+  }
+
+  // ================================================================ panier & favoris
+  function cartCount() { return S.cart.reduce((s, i) => s + i.qty, 0); }
+  function cartSubtotal(items = S.cart) {
+    return items.reduce((s, i) => {
+      const prod = byId(i.id);
+      return prod ? s + unitPrice(prod, i.option) * i.qty : s;
+    }, 0);
+  }
+  function persistCart() {
+    S.cart = S.cart.filter((i) => byId(i.id));
+    save('pdp_cart', S.cart);
+    const n = cartCount();
+    [$('#cart-count'), $('#tab-cart-count')].forEach((b) => { b.textContent = n > 99 ? '99+' : n; b.hidden = n === 0; });
+  }
+  function addToCart(id, option, qty = 1) {
+    const prod = byId(id);
+    if (!prod) return;
+    const opt = prod.options ? (option || prod.options[0].label) : null;
+    const line = S.cart.find((i) => i.id === id && i.option === opt);
+    if (line) line.qty = Math.min(99, line.qty + qty);
+    else S.cart.push({ id, option: opt, qty });
+    persistCart();
+    toast(`✓ ${prod.name} ajouté au panier`);
+  }
+  function toggleFav(id) {
+    const i = S.favs.indexOf(id);
+    if (i >= 0) S.favs.splice(i, 1); else S.favs.push(id);
+    save('pdp_favs', S.favs);
+    $$(`[data-fav="${id}"]`).forEach((b) => { b.textContent = b.classList.contains('fav-lg') ? (i >= 0 ? '🤍' : '❤️') : (i >= 0 ? '🤍' : '❤️'); });
+    toast(i >= 0 ? 'Retiré des favoris' : '❤️ Ajouté aux favoris');
+    if (location.hash.startsWith('#/favoris')) render();
+  }
+
+  // ================================================================ interface commune
+  let toastTimer;
+  function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+  }
+  function openModal(html) {
+    $('#modal-body').innerHTML = html;
+    $('#modal').hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    $('#modal').hidden = true;
+    document.body.style.overflow = '';
+  }
+  $('#modal').addEventListener('click', (e) => { if (e.target.closest('[data-close]')) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  function quickAdd(id) {
+    const prod = byId(id);
+    if (!prod.options) return addToCart(id, null, 1);
+    openModal(`
+      <div style="display:flex;gap:14px;align-items:center">
+        <div class="cart-thumb" style="${bg(prod)};width:80px">${prod.emoji}</div>
+        <div><h2>${esc(prod.name)}</h2><div class="price sale" id="qa-price">${money(unitPrice(prod))}</div></div>
+      </div>
+      <div class="opt-label">${esc(prod.optionLabel || 'Option')}</div>
+      <div class="opts" id="qa-opts">${optionButtons(prod, prod.options[0].label)}</div>
+      <button class="btn btn-block" style="margin-top:20px" id="qa-add">Ajouter au panier</button>
+      <p class="hint" style="margin-top:10px"><a class="link" href="#/produit/${prod.id}" data-close>Voir la fiche complète</a></p>`);
+    let sel = prod.options[0].label;
+    $('#qa-opts').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-opt]');
+      if (!b) return;
+      sel = b.dataset.opt;
+      $('#qa-opts').innerHTML = optionButtons(prod, sel);
+      $('#qa-price').textContent = money(unitPrice(prod, sel));
+    });
+    $('#qa-add').addEventListener('click', () => { addToCart(id, sel, 1); closeModal(); });
+  }
+  function optionButtons(prod, selected) {
+    return prod.options.map((o) => `<button class="opt ${o.label === selected ? 'active' : ''}" data-opt="${esc(o.label)}">${esc(o.label)}${o.price && o.price !== prod.price ? `<small>${money(o.price)}</small>` : ''}</button>`).join('');
+  }
+
+  // délégation globale : favoris, ajout rapide
+  document.addEventListener('click', (e) => {
+    const fav = e.target.closest('[data-fav]');
+    if (fav) { e.preventDefault(); return toggleFav(fav.dataset.fav); }
+    const qa = e.target.closest('[data-quick]');
+    if (qa) { e.preventDefault(); return quickAdd(qa.dataset.quick); }
+  });
+
+  // ================================================================ en-tête
+  function setupHeader() {
+    const cur = $('#currency');
+    cur.innerHTML = Object.keys(S.catalog.currencies).map((k) => `<option value="${k}" ${k === S.currency ? 'selected' : ''}>${k === 'XAF' ? 'FCFA' : k}</option>`).join('');
+    cur.addEventListener('change', () => { S.currency = cur.value; save('pdp_currency', S.currency); render(); });
+
+    $('#cat-nav').innerHTML = [
+      '<a href="#/" data-nav="home">Accueil</a>',
+      '<a href="#/flash" data-nav="flash" class="hot">⚡ Ventes Flash</a>',
+      ...S.catalog.categories.map((c) => `<a href="#/categorie/${c.slug}" data-nav="${c.slug}">${esc(c.name)}</a>`),
+      '<a href="#/panier-partage" data-nav="partage">🤝 Panier partagé</a>',
+    ].join('');
+
+    $('#search-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = $('#search-input').value.trim();
+      location.hash = q ? `#/recherche/${encodeURIComponent(q)}` : '#/';
+    });
+
+    const msgs = [
+      '🚚 Livraison offerte dès 50 000 FCFA d\'achat',
+      '📸 Photo de la remise du colis envoyée sur WhatsApp',
+      '🇨🇲 Livraison à Yaoundé et Douala en 24 h',
+      '🤝 Nouveau : votre famille compose le panier, vous payez d\'où vous êtes',
+      '💳 Carte, PayPal, Orange Money et MTN MoMo acceptés',
+    ];
+    let k = 0;
+    setInterval(() => { k = (k + 1) % msgs.length; $('#promo-bar').innerHTML = `<span>${msgs[k]}</span>`; }, 4000);
+    $('#promo-bar').innerHTML = `<span>${msgs[0]}</span>`;
+    $('#year').textContent = new Date().getFullYear();
+  }
+
+  function setActiveNav(key, tab) {
+    $$('#cat-nav a').forEach((a) => a.classList.toggle('active', a.dataset.nav === key));
+    $$('.tabbar a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
+  }
+
+  // ================================================================ pages
+  let timers = [];
+  function clearTimers() { timers.forEach(clearInterval); timers = []; }
+
+  function countdownHtml() { return '<span class="countdown" data-countdown>Se termine dans <b>00</b>:<b>00</b>:<b>00</b></span>'; }
+  function startCountdowns() {
+    const tick = () => {
+      const now = new Date();
+      const end = new Date(now); end.setHours(24, 0, 0, 0);
+      let s = Math.max(0, Math.floor((end - now) / 1000));
+      const h = String(Math.floor(s / 3600)).padStart(2, '0'); s %= 3600;
+      const m = String(Math.floor(s / 60)).padStart(2, '0');
+      const sec = String(s % 60).padStart(2, '0');
+      $$('[data-countdown]').forEach((el) => { el.innerHTML = `Se termine dans <b>${h}</b>:<b>${m}</b>:<b>${sec}</b>`; });
+    };
+    tick();
+    timers.push(setInterval(tick, 1000));
+  }
+
+  // ---------------------------------------------------------------- accueil
+  function pageHome() {
+    setActiveNav('home', 'home');
+    const P = S.catalog.products;
+    const flash = P.filter((x) => x.tags.includes('flash')).sort((a, b) => pct(b) - pct(a));
+    const paniers = P.filter((x) => x.cat === 'paniers');
+    const best = P.filter((x) => x.tags.includes('best')).sort((a, b) => b.sold - a.sold);
+    const slides = [
+      { bg: 'linear-gradient(120deg,#0b5d46,#119b72)', small: 'NOUVEAU · PANIER PARTAGÉ', h: 'Ils choisissent au pays,<br>vous validez d\'ici.', p: 'Votre famille compose son panier au Cameroun et vous envoie le lien. Vous payez en un clic.', cta: 'Découvrir', href: '#/panier-partage', art: '🤝' },
+      { bg: 'linear-gradient(120deg,#b3121f,#f2542d)', small: 'FÊTES DE FIN D\'ANNÉE', h: 'Jusqu\'à -30 %<br>sur les paniers de fête', p: 'Poulets, riz, boissons et cadeaux livrés à la maison pour Noël et le Nouvel An.', cta: 'J\'en profite', href: '#/produit/panier-noel', art: '🎄' },
+      { bg: 'linear-gradient(120deg,#1c1c1c,#4a4a4a)', small: 'DU MARCHÉ À LA MAISON', h: 'Le marché du pays,<br>livré en 24 h', p: 'Manioc, plantain, ndolè, viande fraîche : achetés le matin, livrés le jour même.', cta: 'Faire le marché', href: '#/categorie/vivres', art: '🍌' },
+    ];
+    app.innerHTML = `
+      <section class="hero" id="hero">
+        ${slides.map((s, i) => `
+          <div class="slide ${i === 0 ? 'active' : ''}" style="background:${s.bg}">
+            <div class="slide-text">
+              <small>${s.small}</small>
+              <h1>${s.h}</h1>
+              <p>${s.p}</p>
+              <a class="btn btn-white" href="${s.href}">${s.cta} →</a>
+            </div>
+            <div class="slide-art">${s.art}</div>
+          </div>`).join('')}
+        <div class="hero-dots">${slides.map((_, i) => `<button data-slide="${i}" class="${i === 0 ? 'active' : ''}" aria-label="Diapositive ${i + 1}"></button>`).join('')}</div>
+      </section>
+
+      <section class="section">
+        <div class="cat-circles">
+          ${S.catalog.categories.map((c) => `<a class="cat-circle" href="#/categorie/${c.slug}"><span style="background:${c.color}">${c.emoji}</span>${esc(c.name)}</a>`).join('')}
+        </div>
+      </section>
+
+      <section class="section flash">
+        <div class="section-head">
+          <div class="flash-title"><h2>⚡ Ventes Flash</h2>${countdownHtml()}</div>
+          <a href="#/flash">Tout voir ›</a>
+        </div>
+        <div class="h-scroll">${flash.map((x) => card(x, { flash: true })).join('')}</div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2>Comment ça marche ?</h2><a href="#/comment-ca-marche">En savoir plus ›</a></div>
+        ${stepsHtml()}
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2>🧺 Paniers tout prêts</h2><a href="#/categorie/paniers">Tout voir ›</a></div>
+        <div class="h-scroll">${paniers.map((x) => card(x)).join('')}</div>
+      </section>
+
+      <section class="section">${shareCtaHtml()}</section>
+
+      <section class="section">
+        <div class="section-head"><h2>🔥 Les plus offerts</h2><a href="#/meilleures-ventes">Tout voir ›</a></div>
+        <div class="h-scroll">${best.slice(0, 12).map((x) => card(x)).join('')}</div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2>Pour vous</h2></div>
+        <div class="grid" id="for-you"></div>
+        <div style="text-align:center;margin-top:20px"><button class="btn btn-outline" id="more">Voir plus d'articles</button></div>
+      </section>
+
+      <section class="section">${trustHtml()}</section>`;
+
+    // carrousel
+    let cur = 0;
+    const go = (i) => {
+      cur = i;
+      $$('.slide').forEach((s, k) => s.classList.toggle('active', k === i));
+      $$('.hero-dots button').forEach((b, k) => b.classList.toggle('active', k === i));
+    };
+    $('.hero-dots').addEventListener('click', (e) => { const b = e.target.closest('[data-slide]'); if (b) go(+b.dataset.slide); });
+    timers.push(setInterval(() => go((cur + 1) % slides.length), 5500));
+    startCountdowns();
+
+    // "Pour vous" : mélange stable du catalogue, chargé par pages
+    const mixed = P.slice().sort((a, b) => hash(a.id) - hash(b.id));
+    let shown = 0;
+    const more = () => {
+      const next = mixed.slice(shown, shown + 20);
+      $('#for-you').insertAdjacentHTML('beforeend', next.map((x) => card(x)).join(''));
+      shown += next.length;
+      $('#more').hidden = shown >= mixed.length;
+    };
+    $('#more').addEventListener('click', more);
+    more();
+  }
+  function hash(s) { let h = 7; for (const ch of s) h = (h * 31 + ch.charCodeAt(0)) % 100003; return h; }
+
+  function stepsHtml() {
+    return `<div class="steps">
+      <div class="step"><div class="step-num">1</div><h3>Choisissez</h3><p>Vivres, habits, chaussures, cadeaux… ou un panier tout prêt. Prix affichés dans votre devise.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Indiquez le bénéficiaire</h3><p>Nom, téléphone, ville et quartier de votre proche au Cameroun.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Payez d'où vous êtes</h3><p>Carte bancaire, PayPal ou Mobile Money. Paiement 100 % sécurisé.</p></div>
+      <div class="step"><div class="step-num">4</div><h3>On livre au pays</h3><p>Livraison en 24 h à Yaoundé et Douala, photo de la remise envoyée sur WhatsApp.</p></div>
+    </div>`;
+  }
+  function shareCtaHtml() {
+    return `<div class="share-cta">
+      <div>
+        <h2>Le panier partagé 🤝</h2>
+        <p>Maman sait mieux que personne ce dont la maison a besoin. Elle compose son panier sur Panier du Pays au Cameroun, vous envoie le lien par WhatsApp, et vous n'avez plus qu'à valider et payer depuis Paris, Montréal ou Berlin.</p>
+        <a class="btn btn-white" href="#/panier-partage">Comment ça marche ?</a>
+      </div>
+      <div class="share-visual">
+        <figure>🧺<figcaption>Composé au pays</figcaption></figure><i>→ 📲 →</i><figure>💳<figcaption>Payé à l'étranger</figcaption></figure>
+      </div>
+      <div class="flag"></div>
+    </div>`;
+  }
+  function trustHtml() {
+    return `<div class="trust">
+      <div><span>🔒</span><span><b>Paiement sécurisé</b>Carte, PayPal, Mobile Money</span></div>
+      <div><span>🚚</span><span><b>Livraison 24–96 h</b>Dans tout le Cameroun</span></div>
+      <div><span>📸</span><span><b>Preuve de livraison</b>Photo envoyée sur WhatsApp</span></div>
+      <div><span>💬</span><span><b>Service client</b>7 j/7 en français et en anglais</span></div>
+    </div>`;
+  }
+
+  // ---------------------------------------------------------------- listes
+  function pageList({ title, products, navKey, crumbs, tab = 'categories', subtitle = '' }) {
+    setActiveNav(navKey, tab);
+    let filter = 'all';
+    let sort = 'reco';
+    app.innerHTML = `
+      <div class="breadcrumb"><a href="#/">Accueil</a> › ${crumbs}</div>
+      <h1 class="page-title">${title}</h1>
+      ${subtitle ? `<p class="muted" style="margin:0">${subtitle}</p>` : ''}
+      <div class="toolbar">
+        <div class="chips" id="chips">
+          <button class="chip active" data-f="all">Tout</button>
+          <button class="chip" data-f="promo">Promotions</button>
+          <button class="chip" data-f="new">Nouveautés</button>
+          <button class="chip" data-f="best">Top ventes</button>
+          <button class="chip" data-f="lt10">Moins de ${money(10000)}</button>
+        </div>
+        <select class="select" id="sort" aria-label="Trier">
+          <option value="reco">Recommandé</option>
+          <option value="asc">Prix croissant</option>
+          <option value="desc">Prix décroissant</option>
+          <option value="sold">Plus vendus</option>
+          <option value="rating">Mieux notés</option>
+          <option value="off">Plus grosse remise</option>
+        </select>
+      </div>
+      <div class="grid" id="list"></div>`;
+    const draw = () => {
+      let list = products.slice();
+      if (filter === 'promo') list = list.filter((x) => x.oldPrice);
+      if (filter === 'new') list = list.filter((x) => x.tags.includes('new'));
+      if (filter === 'best') list = list.filter((x) => x.tags.includes('best'));
+      if (filter === 'lt10') list = list.filter((x) => x.price < 10000);
+      const sorters = {
+        asc: (a, b) => a.price - b.price, desc: (a, b) => b.price - a.price, sold: (a, b) => b.sold - a.sold,
+        rating: (a, b) => b.rating - a.rating, off: (a, b) => pct(b) - pct(a),
+      };
+      if (sorters[sort]) list.sort(sorters[sort]);
+      $('#list').outerHTML = list.length
+        ? `<div class="grid" id="list">${list.map((x) => card(x)).join('')}</div>`
+        : '<div id="list" class="empty"><div class="big">🔎</div><h2>Aucun article</h2><p>Essayez un autre filtre.</p></div>';
+    };
+    $('#chips').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-f]');
+      if (!b) return;
+      filter = b.dataset.f;
+      $$('#chips .chip').forEach((c) => c.classList.toggle('active', c === b));
+      draw();
+    });
+    $('#sort').addEventListener('change', (e) => { sort = e.target.value; draw(); });
+    draw();
+  }
+
+  function pageCategory(slug) {
+    const c = catOf(slug);
+    if (!c) return pageNotFound();
+    pageList({ title: `${c.emoji} ${esc(c.name)}`, products: S.catalog.products.filter((x) => x.cat === slug), navKey: slug, crumbs: esc(c.name) });
+  }
+  function pageFlash() {
+    pageList({ title: '⚡ Ventes Flash', products: S.catalog.products.filter((x) => x.tags.includes('flash')), navKey: 'flash', crumbs: 'Ventes Flash', subtitle: 'Les prix les plus bas, renouvelés chaque jour à minuit.' });
+    $('.page-title').insertAdjacentHTML('afterend', `<div style="margin:6px 0">${countdownHtml()}</div>`);
+    startCountdowns();
+  }
+  function pageSearch(q) {
+    const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    const words = norm(q).split(/\s+/).filter(Boolean);
+    const list = S.catalog.products.filter((x) => {
+      const hay = norm(`${x.name} ${x.description} ${(catOf(x.cat) || {}).name} ${(x.contents || []).join(' ')} ${x.origin}`);
+      return words.every((w) => hay.includes(w));
+    });
+    $('#search-input').value = q;
+    pageList({ title: `Résultats pour « ${esc(q)} »`, products: list, navKey: '', crumbs: 'Recherche', subtitle: `${list.length} article(s) trouvé(s)`, tab: 'home' });
+  }
+  function pageCategories() {
+    setActiveNav('', 'categories');
+    app.innerHTML = `<h1 class="page-title">Toutes les catégories</h1>
+      <div class="section">${S.catalog.categories.map((c) => {
+        const items = S.catalog.products.filter((x) => x.cat === c.slug);
+        return `<div class="section">
+          <div class="section-head"><h2>${c.emoji} ${esc(c.name)}</h2><a href="#/categorie/${c.slug}">${items.length} articles ›</a></div>
+          <div class="h-scroll">${items.slice(0, 8).map((x) => card(x)).join('')}</div></div>`;
+      }).join('')}</div>`;
+  }
+  function pageFavs() {
+    setActiveNav('', 'favoris');
+    const list = S.favs.map(byId).filter(Boolean);
+    app.innerHTML = `<h1 class="page-title">Mes favoris</h1>` + (list.length
+      ? `<p class="muted">${list.length} article(s)</p><div class="grid">${list.map((x) => card(x)).join('')}</div>`
+      : '<div class="empty"><div class="big">🤍</div><h2>Aucun favori pour l\'instant</h2><p>Touchez le cœur d\'un article pour le retrouver ici.</p><a class="btn" href="#/">Découvrir les articles</a></div>');
+  }
+
+  // ---------------------------------------------------------------- fiche produit
+  function pageProduct(id) {
+    const prod = byId(id);
+    if (!prod) return pageNotFound();
+    const c = catOf(prod.cat);
+    setActiveNav(prod.cat, 'categories');
+    let opt = prod.options ? prod.options[0].label : null;
+    let qty = 1;
+    const off = pct(prod);
+    const related = S.catalog.products.filter((x) => x.cat === prod.cat && x.id !== prod.id).slice(0, 10);
+    const angles = [prod.emoji, c.emoji, '🎁'];
+    const reviewers = [
+      ['Christelle, Lyon', 'Ma mère a reçu la commande le lendemain, tout était frais. Merci pour la photo !'],
+      ['Junior, Montréal', 'Très pratique, le livreur a appelé mon frère avant d\'arriver. Je recommande.'],
+      ['Aïcha, Bruxelles', 'Qualité au rendez-vous, et le message cadeau a fait pleurer ma grand-mère 😅'],
+    ];
+    app.innerHTML = `
+      <div class="breadcrumb"><a href="#/">Accueil</a> › <a href="#/categorie/${c.slug}">${esc(c.name)}</a> › ${esc(prod.name)}</div>
+      <div class="product">
+        <div class="gallery">
+          <div class="thumbs">${angles.map((a, i) => `<button style="${bg(prod)}" class="${i === 0 ? 'active' : ''}" data-thumb="${a}">${a}</button>`).join('')}</div>
+          <div class="main-img" style="${bg(prod)}"><span id="main-emoji">${prod.emoji}</span>${off ? `<span class="tag" style="top:14px;font-size:13px">-${off}%</span>` : ''}</div>
+        </div>
+        <div class="p-info">
+          <h1>${esc(prod.name)}</h1>
+          <div class="meta" style="font-size:13px"><span class="stars">${stars(prod.rating)}</span> <b style="color:var(--ink)">${prod.rating.toFixed(1)}</b> · ${kfmt(prod.reviews)} avis · ${kfmt(prod.sold)} vendus</div>
+          <div class="p-price">
+            <span class="price ${off ? 'sale' : ''}" id="p-price">${money(unitPrice(prod, opt))}</span>
+            ${prod.oldPrice ? `<span class="old" id="p-old">${money(oldUnit(prod, opt))}</span><span class="off">-${off}%</span>` : ''}
+            <span class="conv" id="p-conv">${S.currency !== 'XAF' ? `soit ${money(unitPrice(prod, opt), 'XAF')} au Cameroun` : 'Prix au Cameroun'}</span>
+          </div>
+          ${prod.options ? `<div class="opt-label">${esc(prod.optionLabel || 'Option')} : <span id="opt-name" class="muted">${esc(opt)}</span></div><div class="opts" id="opts">${optionButtons(prod, opt)}</div>` : ''}
+          <div class="opt-label">Quantité</div>
+          <div class="qty"><button data-q="-1" aria-label="Moins">−</button><span id="qty">1</span><button data-q="1" aria-label="Plus">+</button></div>
+          <div class="p-actions">
+            <button class="btn btn-sale" id="add">Ajouter au panier</button>
+            <button class="fav-lg" data-fav="${prod.id}" aria-label="Favori">${S.favs.includes(prod.id) ? '❤️' : '🤍'}</button>
+          </div>
+          <div class="info-box">
+            <div><span>📍</span><span><b>Provenance</b>${esc(prod.origin)}</span></div>
+            <div><span>🚚</span><span><b>Livraison au Cameroun</b>24 h à Yaoundé et Douala · 48–96 h dans les autres villes · offerte dès ${money(S.catalog.freeDeliveryFrom)}</span></div>
+            <div><span>🎁</span><span><b>Message cadeau gratuit</b>Ajoutez un mot pour votre proche lors de la commande</span></div>
+            <div><span>🤝</span><span><b>Vous êtes au Cameroun ?</b>Ajoutez cet article au panier et envoyez-le à un proche pour qu'il paie.</span></div>
+          </div>
+          ${prod.contents ? `<div class="opt-label">Contenu du panier</div><ul class="contents">${prod.contents.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+          <div class="opt-label">Description</div>
+          <p class="desc">${esc(prod.description || `${prod.name}, sélectionné avec soin par notre équipe au Cameroun et livré directement chez votre proche.`)}</p>
+          <div class="opt-label">Avis clients (${kfmt(prod.reviews)})</div>
+          <div class="reviews">${reviewers.map(([who, txt], i) => `<div class="review"><div class="review-head"><span><span class="stars">★★★★★</span> ${who}</span><span>il y a ${i * 3 + 2} jours</span></div><div>${txt}</div></div>`).join('')}</div>
+        </div>
+      </div>
+      ${related.length ? `<section class="section"><div class="section-head"><h2>Vous aimerez aussi</h2></div><div class="grid">${related.map((x) => card(x)).join('')}</div></section>` : ''}`;
+
+    const refresh = () => {
+      const u = unitPrice(prod, opt);
+      $('#p-price').textContent = money(u * qty);
+      if ($('#p-old')) $('#p-old').textContent = money(oldUnit(prod, opt) * qty);
+      if (S.currency !== 'XAF') $('#p-conv').textContent = `soit ${money(u * qty, 'XAF')} au Cameroun`;
+      $('#qty').textContent = qty;
+    };
+    $('.thumbs').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-thumb]');
+      if (!b) return;
+      $('#main-emoji').textContent = b.dataset.thumb;
+      $$('.thumbs button').forEach((x) => x.classList.toggle('active', x === b));
+    });
+    if (prod.options) {
+      $('#opts').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-opt]');
+        if (!b) return;
+        opt = b.dataset.opt;
+        $('#opts').innerHTML = optionButtons(prod, opt);
+        $('#opt-name').textContent = opt;
+        refresh();
+      });
+    }
+    $('.qty').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-q]');
+      if (!b) return;
+      qty = Math.max(1, Math.min(99, qty + Number(b.dataset.q)));
+      refresh();
+    });
+    $('#add').addEventListener('click', () => addToCart(prod.id, opt, qty));
+  }
+
+  // ---------------------------------------------------------------- panier
+  function totalsFor(items, cityName) {
+    const subtotal = cartSubtotal(items);
+    const city = S.catalog.cities.find((c) => c.name === cityName);
+    const delivery = !city ? null : subtotal >= S.catalog.freeDeliveryFrom ? 0 : city.fee;
+    const service = Math.round(subtotal * S.catalog.serviceFeeRate);
+    return { subtotal, delivery, service, total: subtotal + (delivery || 0) + service };
+  }
+  function summaryRows(t, { cityKnown = false } = {}) {
+    return `
+      <div class="sum-row"><span>Sous-total</span><span>${money(t.subtotal)}</span></div>
+      <div class="sum-row"><span>Livraison</span><span>${t.delivery == null || !cityKnown ? 'selon la ville' : t.delivery === 0 ? '<span class="free">Offerte</span>' : money(t.delivery)}</span></div>
+      <div class="sum-row"><span>Frais de service (${Math.round(S.catalog.serviceFeeRate * 100)} %)</span><span>${money(t.service)}</span></div>
+      <div class="sum-row total"><span>Total</span><span>${money(t.total)}</span></div>
+      ${S.currency !== 'XAF' ? `<div class="sum-row" style="font-size:12px"><span>Équivalent</span><span>${money(t.total, 'XAF')}</span></div>` : ''}`;
+  }
+  function freeShipHtml(subtotal) {
+    const goal = S.catalog.freeDeliveryFrom;
+    if (subtotal >= goal) return '<div class="free-ship">🎉 La livraison est <b>offerte</b> pour ce panier !</div>';
+    return `<div class="free-ship">Plus que <b>${money(goal - subtotal)}</b> pour la livraison offerte<div class="bar"><i style="width:${(subtotal / goal) * 100}%"></i></div></div>`;
+  }
+
+  function pageCart() {
+    setActiveNav('', 'panier');
+    if (!S.cart.length) {
+      app.innerHTML = `<h1 class="page-title">Mon panier</h1>
+        <div class="empty"><div class="big">🛍️</div><h2>Votre panier est vide</h2><p>Faites plaisir à vos proches au Cameroun en quelques clics.</p><a class="btn" href="#/">Commencer mes achats</a></div>
+        <section class="section"><div class="section-head"><h2>Les plus offerts</h2></div><div class="h-scroll">${S.catalog.products.filter((x) => x.tags.includes('best')).map((x) => card(x)).join('')}</div></section>`;
+      return;
+    }
+    const t = totalsFor(S.cart);
+    app.innerHTML = `
+      <h1 class="page-title">Mon panier (${cartCount()})</h1>
+      <div class="cart-layout">
+        <div>
+          ${freeShipHtml(t.subtotal)}
+          ${S.cart.map((i, k) => {
+            const prod = byId(i.id);
+            const u = unitPrice(prod, i.option);
+            return `<div class="cart-item">
+              <a href="#/produit/${prod.id}" class="cart-thumb" style="${bg(prod)}">${prod.emoji}</a>
+              <div>
+                <h3><a href="#/produit/${prod.id}">${esc(prod.name)}</a></h3>
+                ${i.option ? `<span class="opt-pill">${esc(prod.optionLabel || 'Option')} : ${esc(i.option)}</span>` : ''}
+                <div class="price-row" style="margin-top:6px"><span class="price ${prod.oldPrice ? 'sale' : ''}">${money(u)}</span></div>
+              </div>
+              <div class="cart-item-right">
+                <div class="qty"><button data-line="${k}" data-d="-1" aria-label="Moins">−</button><span>${i.qty}</span><button data-line="${k}" data-d="1" aria-label="Plus">+</button></div>
+                <b>${money(u * i.qty)}</b>
+                <button class="remove" data-remove="${k}">Supprimer</button>
+              </div>
+            </div>`;
+          }).join('')}
+          <p style="margin-top:14px"><a class="link" href="#/">← Continuer mes achats</a></p>
+        </div>
+        <aside class="summary">
+          <h3>Récapitulatif</h3>
+          ${summaryRows(t)}
+          <a class="btn btn-sale btn-block" href="#/commande">Commander et payer</a>
+          <div class="or">— ou —</div>
+          <button class="btn btn-green btn-block" id="share-btn">🤝 Faire payer par un proche</button>
+          <p class="hint">Vous êtes au Cameroun ? Envoyez ce panier à un proche à l'étranger : il le valide et le paie.</p>
+        </aside>
+      </div>`;
+    app.addEventListener('click', cartClicks);
+    $('#share-btn').addEventListener('click', openShareModal);
+  }
+  function cartClicks(e) {
+    if (!location.hash.startsWith('#/panier')) return app.removeEventListener('click', cartClicks);
+    const d = e.target.closest('[data-d]');
+    const r = e.target.closest('[data-remove]');
+    if (d) {
+      const line = S.cart[+d.dataset.line];
+      line.qty = Math.max(1, Math.min(99, line.qty + Number(d.dataset.d)));
+    } else if (r) {
+      S.cart.splice(+r.dataset.remove, 1);
+      toast('Article supprimé');
+    } else return;
+    persistCart();
+    app.removeEventListener('click', cartClicks);
+    pageCart();
+  }
+
+  function cityOptions(selected) {
+    return `<option value="">— Choisir la ville —</option>` + S.catalog.cities.map((c) => `<option ${c.name === selected ? 'selected' : ''}>${esc(c.name)}</option>`).join('');
+  }
+
+  function openShareModal() {
+    openModal(`
+      <h2>🤝 Faire payer ce panier par un proche</h2>
+      <p class="muted" style="margin-top:0">Nous créons un lien unique. Envoyez-le par WhatsApp à la personne qui va payer (en France, au Canada, aux USA…).</p>
+      <form id="share-form" class="fields">
+        <div class="field"><label>Votre nom *</label><input name="name" required maxlength="80" placeholder="Ex. Maman Brigitte"></div>
+        <div class="field"><label>Votre téléphone *</label><input name="phone" required maxlength="30" placeholder="6XX XX XX XX" inputmode="tel"></div>
+        <div class="field"><label>Ville de livraison *</label><select name="city" required>${cityOptions()}</select></div>
+        <div class="field"><label>Quartier</label><input name="quarter" maxlength="120" placeholder="Ex. Bastos, Akwa, Biyem-Assi"></div>
+        <div class="field full"><label>Qui va payer ?</label><input name="payerName" maxlength="80" placeholder="Ex. Mon fils Patrick"></div>
+        <div class="field full"><label>Petit message</label><textarea name="message" maxlength="600" placeholder="Bonjour mon fils, voici ce qu'il faut pour la maison ce mois-ci. Que Dieu te bénisse 🙏"></textarea></div>
+        <button class="btn btn-green btn-block field full" type="submit">Créer le lien de paiement</button>
+      </form>`);
+    $('#share-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const f = new FormData(e.target);
+      const btn = $('button[type=submit]', e.target);
+      btn.disabled = true;
+      btn.textContent = 'Création…';
+      try {
+        const r = await api('/api/shared-carts', {
+          method: 'POST',
+          body: {
+            items: S.cart,
+            requester: { name: f.get('name'), phone: f.get('phone'), payerName: f.get('payerName') },
+            recipient: { city: f.get('city'), quarter: f.get('quarter') },
+            message: f.get('message'),
+          },
+        });
+        S.shared.unshift(r.code);
+        save('pdp_shared', S.shared.slice(0, 20));
+        S.cart = [];
+        persistCart();
+        closeModal();
+        location.hash = `#/partage/${r.code}?nouveau=1`;
+      } catch (err) {
+        toast(err.message);
+        btn.disabled = false;
+        btn.textContent = 'Créer le lien de paiement';
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------- panier partagé (vue du payeur)
+  async function pageShared(codeStr, params) {
+    setActiveNav('partage', 'panier');
+    app.innerHTML = '<div class="empty"><div class="big">⏳</div><p>Chargement du panier…</p></div>';
+    let cart;
+    try {
+      cart = await api(`/api/shared-carts/${encodeURIComponent(codeStr)}`);
+    } catch (err) {
+      app.innerHTML = `<div class="empty"><div class="big">🔗</div><h2>Lien introuvable</h2><p>${esc(err.message)}</p><a class="btn" href="#/">Retour à l'accueil</a></div>`;
+      return;
+    }
+    const link = `${location.origin}/#/partage/${cart.code}`;
+    const isNew = params.get('nouveau') === '1';
+    const q = cart.quote;
+    const waText = `Bonjour${cart.requester.payerName ? ' ' + cart.requester.payerName : ''} 👋 J'ai préparé un panier sur Panier du Pays (${money(q.total, 'XAF')}). Tu peux le voir et le payer ici : ${link}`;
+    const paid = cart.status === 'payee';
+    app.innerHTML = `
+      ${isNew ? `<div class="success"><div class="big">🎉</div><h1>Votre panier est prêt !</h1><p class="muted">Envoyez maintenant le lien à la personne qui va payer.</p></div>
+        <div class="box" style="max-width:640px;margin:0 auto 20px">
+          <div class="share-link"><code>${esc(link)}</code><button class="btn btn-sm" id="copy">Copier</button></div>
+          <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+            <a class="btn btn-wa" style="flex:1" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(waText)}">Envoyer sur WhatsApp</a>
+            <a class="btn btn-outline" style="flex:1" href="sms:?&body=${encodeURIComponent(waText)}">Envoyer par SMS</a>
+          </div>
+          <p class="hint" style="margin-top:10px">Code du panier : <b>${cart.code}</b> · Gardez ce lien pour suivre le paiement.</p>
+        </div>` : ''}
+      <div class="breadcrumb"><a href="#/">Accueil</a> › Panier partagé ${cart.code}</div>
+      <h1 class="page-title">${paid ? '✅ Panier payé' : `🧺 Panier préparé par ${esc(cart.requester.name)}`}</h1>
+      <div class="cart-layout">
+        <div>
+          ${cart.message ? `<div class="opt-label">Message de ${esc(cart.requester.name)}</div><div class="quote-bubble">${esc(cart.message)}</div>` : ''}
+          <div class="opt-label">Livraison prévue</div>
+          <div class="info-box"><div><span>📍</span><span><b>${esc(cart.recipient.name)} · ${esc(cart.recipient.phone)}</b>${esc(cart.recipient.city || 'Ville à préciser')}${cart.recipient.quarter ? ', ' + esc(cart.recipient.quarter) : ''}</span></div></div>
+          <div class="opt-label">Articles (${q.items.reduce((s, i) => s + i.qty, 0)})</div>
+          ${q.items.map((i) => {
+            const prod = byId(i.id);
+            return `<div class="cart-item">
+              <a href="#/produit/${i.id}" class="cart-thumb" style="${prod ? bg(prod) : ''}">${i.emoji}</a>
+              <div><h3>${esc(i.name)}</h3>${i.option ? `<span class="opt-pill">${esc(i.optionLabel || 'Option')} : ${esc(i.option)}</span>` : ''}<div class="muted" style="margin-top:6px">${money(i.unit)} × ${i.qty}</div></div>
+              <div class="cart-item-right"><b>${money(i.total)}</b></div></div>`;
+          }).join('')}
+        </div>
+        <aside class="summary">
+          <h3>Total à payer</h3>
+          <div class="sum-row"><span>Sous-total</span><span>${money(q.subtotal)}</span></div>
+          <div class="sum-row"><span>Livraison ${q.city ? `(${esc(q.city)})` : ''}</span><span>${q.delivery === 0 && q.city ? '<span class="free">Offerte</span>' : money(q.delivery)}</span></div>
+          <div class="sum-row"><span>Frais de service</span><span>${money(q.service)}</span></div>
+          <div class="sum-row total"><span>Total</span><span>${money(q.total)}</span></div>
+          ${S.currency !== 'XAF' ? `<div class="sum-row" style="font-size:12px"><span>Équivalent</span><span>${money(q.total, 'XAF')}</span></div>` : ''}
+          ${paid
+            ? `<div class="notice green">Ce panier a été payé. Commande <b>${esc(cart.orderId)}</b> — ${esc(cart.order ? cart.order.statusLabel : '')}.</div>
+               <a class="btn btn-block" href="#/commande/${esc(cart.orderId)}">Suivre la livraison</a>`
+            : `<button class="btn btn-sale btn-block" id="pay-shared">Valider et payer ce panier</button>
+               <button class="btn btn-outline btn-block" id="edit-shared">Modifier avant de payer</button>
+               <p class="hint">🔒 Paiement sécurisé par carte, PayPal ou Mobile Money. ${esc(cart.requester.name)} sera prévenu(e) dès le paiement.</p>`}
+        </aside>
+      </div>`;
+    if ($('#copy')) {
+      $('#copy').addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(link); toast('Lien copié ✓'); } catch { toast(link); }
+      });
+    }
+    if (!paid) {
+      $('#pay-shared').addEventListener('click', () => {
+        S.checkoutSource = { sharedCode: cart.code, items: cart.items, recipient: cart.recipient, requester: cart.requester };
+        location.hash = '#/commande';
+      });
+      $('#edit-shared').addEventListener('click', () => {
+        // on charge les articles dans le panier du payeur ; il pourra en ajouter/retirer
+        cart.items.forEach((i) => {
+          const line = S.cart.find((x) => x.id === i.id && x.option === i.option);
+          if (line) line.qty = Math.max(line.qty, i.qty); else S.cart.push({ ...i });
+        });
+        persistCart();
+        save('pdp_prefill', { recipient: cart.recipient, from: cart.requester.name });
+        toast('Articles ajoutés à votre panier');
+        location.hash = '#/panier';
+      });
+    }
+  }
+
+  // ---------------------------------------------------------------- commande
+  function pageCheckout() {
+    setActiveNav('', 'panier');
+    const src = S.checkoutSource;
+    const items = src ? src.items : S.cart;
+    if (!items.length) { location.hash = '#/panier'; return; }
+    const prefill = src ? { recipient: src.recipient, from: src.requester.name } : load('pdp_prefill', null);
+    const r = (prefill && prefill.recipient) || load('pdp_last_recipient', {});
+    const payer = load('pdp_payer', {});
+    const methods = [
+      ['carte', '💳', 'Carte bancaire', 'Visa, Mastercard'],
+      ['paypal', '🅿️', 'PayPal', 'Compte PayPal'],
+      ['orange_money', '🟠', 'Orange Money', 'Cameroun'],
+      ['mtn_momo', '🟡', 'MTN MoMo', 'Cameroun'],
+      ['virement', '🏦', 'Virement', 'SEPA / Interac'],
+    ];
+    app.innerHTML = `
+      <div class="breadcrumb"><a href="#/panier">Panier</a> › Commande</div>
+      <h1 class="page-title">Finaliser la commande</h1>
+      ${src ? `<div class="notice green" style="margin-bottom:14px">🤝 Vous payez le panier préparé par <b>${esc(src.requester.name)}</b> (code ${esc(src.sharedCode)}).</div>` : ''}
+      <form class="checkout" id="checkout" novalidate>
+        <div>
+          <div class="box">
+            <h2><span class="n">1</span> Le bénéficiaire au Cameroun</h2>
+            <div class="fields">
+              <div class="field"><label>Nom complet *</label><input name="r_name" required maxlength="80" value="${esc(r.name)}" placeholder="Ex. Mbarga Jeanne"></div>
+              <div class="field"><label>Téléphone *</label><input name="r_phone" required maxlength="30" inputmode="tel" value="${esc(r.phone)}" placeholder="+237 6XX XX XX XX"></div>
+              <div class="field"><label>Ville *</label><select name="r_city" required id="r-city">${cityOptions(r.city)}</select></div>
+              <div class="field"><label>Quartier *</label><input name="r_quarter" required maxlength="120" value="${esc(r.quarter)}" placeholder="Ex. Biyem-Assi, Bonamoussadi"></div>
+              <div class="field full"><label>Indications pour le livreur</label><input name="r_address" maxlength="300" value="${esc(r.address)}" placeholder="Ex. Derrière la pharmacie, portail bleu"></div>
+              <div class="field"><label>Date de livraison souhaitée</label><input type="date" name="r_date" min="${new Date(Date.now() + 864e5).toISOString().slice(0, 10)}"></div>
+            </div>
+          </div>
+          <div class="box">
+            <h2><span class="n">2</span> Vos coordonnées</h2>
+            <div class="fields">
+              <div class="field"><label>Votre nom *</label><input name="p_name" required maxlength="80" value="${esc(payer.name)}"></div>
+              <div class="field"><label>E-mail *</label><input type="email" name="p_email" required maxlength="120" value="${esc(payer.email)}" placeholder="pour le reçu et le suivi"></div>
+              <div class="field"><label>Téléphone / WhatsApp</label><input name="p_phone" maxlength="30" inputmode="tel" value="${esc(payer.phone)}" placeholder="pour recevoir la photo de livraison"></div>
+              <div class="field"><label>Pays de résidence</label><select name="p_country">${['France', 'Belgique', 'Suisse', 'Allemagne', 'Royaume-Uni', 'Canada', 'États-Unis', 'Italie', 'Espagne', 'Cameroun', 'Autre'].map((c) => `<option ${c === payer.country ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+            </div>
+          </div>
+          <div class="box">
+            <h2><span class="n">3</span> Message cadeau</h2>
+            <div class="field"><textarea name="gift" maxlength="600" placeholder="Joyeux Noël Maman, je pense fort à vous tous ❤️"></textarea></div>
+            <label class="check" style="margin-top:10px"><input type="checkbox" name="anonymous"> Ne pas afficher le prix au bénéficiaire</label>
+          </div>
+          <div class="box">
+            <h2><span class="n">4</span> Paiement</h2>
+            <div class="pay-methods" id="pay-methods">
+              ${methods.map(([v, ico, label, sub], i) => `<label class="pay-method ${i === 0 ? 'active' : ''}"><input type="radio" name="pay" value="${v}" ${i === 0 ? 'checked' : ''}><span class="ico">${ico}</span><span><b>${label}</b><small>${sub}</small></span></label>`).join('')}
+            </div>
+            <div id="pay-extra" style="margin-top:14px"></div>
+          </div>
+        </div>
+        <aside class="summary">
+          <h3>Votre commande</h3>
+          <div class="mini-items">
+            ${items.map((i) => {
+              const prod = byId(i.id);
+              return prod ? `<div class="mini-item"><div class="cart-thumb" style="${bg(prod)}">${prod.emoji}</div><div>${esc(prod.name)}${i.option ? `<br><span class="muted">${esc(i.option)}</span>` : ''}<br><span class="muted">× ${i.qty}</span></div><b>${money(unitPrice(prod, i.option) * i.qty)}</b></div>` : '';
+            }).join('')}
+          </div>
+          <div id="sum"></div>
+          <button class="btn btn-sale btn-block" type="submit" id="pay-btn">Payer</button>
+          <p class="hint">🔒 Vos données sont chiffrées. En commandant, vous acceptez nos conditions de vente.</p>
+        </aside>
+      </form>`;
+
+    const form = $('#checkout');
+    const drawSum = () => {
+      const t = totalsFor(items, form.r_city.value);
+      $('#sum').innerHTML = freeShipHtml(t.subtotal) + summaryRows(t, { cityKnown: !!form.r_city.value });
+      $('#pay-btn').textContent = `Payer ${money(t.total)}`;
+    };
+    const drawPayExtra = () => {
+      const m = form.pay.value;
+      const box = $('#pay-extra');
+      if (m === 'carte') {
+        box.innerHTML = `<div class="fields">
+          <div class="field full"><label>Numéro de carte</label><input inputmode="numeric" placeholder="4242 4242 4242 4242" maxlength="19" autocomplete="cc-number"></div>
+          <div class="field"><label>Expiration</label><input placeholder="MM/AA" maxlength="5" autocomplete="cc-exp"></div>
+          <div class="field"><label>CVC</label><input inputmode="numeric" placeholder="123" maxlength="4" autocomplete="cc-csc"></div>
+        </div><p class="notice" style="margin-top:10px">Mode démonstration : aucun débit réel n'est effectué. Branchez Stripe, Flutterwave ou CinetPay pour encaisser (voir README).</p>`;
+      } else if (m === 'paypal') {
+        box.innerHTML = '<p class="notice">Vous serez redirigé vers PayPal pour confirmer le paiement (simulation en mode démonstration).</p>';
+      } else if (m === 'orange_money' || m === 'mtn_momo') {
+        box.innerHTML = `<div class="field"><label>Numéro ${m === 'mtn_momo' ? 'MTN MoMo' : 'Orange Money'}</label><input inputmode="tel" placeholder="6XX XX XX XX"></div>
+          <p class="notice" style="margin-top:10px">Vous recevrez une demande de confirmation sur votre téléphone (simulation en mode démonstration).</p>`;
+      } else {
+        box.innerHTML = '<p class="notice">Nous vous enverrons nos coordonnées bancaires par e-mail. La commande sera préparée dès réception du virement.</p>';
+      }
+    };
+    $('#pay-methods').addEventListener('change', () => {
+      $$('.pay-method').forEach((l) => l.classList.toggle('active', $('input', l).checked));
+      drawPayExtra();
+    });
+    form.r_city.addEventListener('change', drawSum);
+    drawSum();
+    drawPayExtra();
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const required = ['r_name', 'r_phone', 'r_city', 'r_quarter', 'p_name', 'p_email'];
+      const missing = required.find((n) => !form[n].value.trim());
+      if (missing) { form[missing].focus(); return toast('Merci de compléter les champs obligatoires *'); }
+      if (!form.p_email.checkValidity()) { form.p_email.focus(); return toast('Adresse e-mail invalide'); }
+      const btn = $('#pay-btn');
+      btn.disabled = true;
+      btn.textContent = 'Paiement en cours…';
+      const recipient = { name: form.r_name.value, phone: form.r_phone.value, city: form.r_city.value, quarter: form.r_quarter.value, address: form.r_address.value, date: form.r_date.value };
+      const payerInfo = { name: form.p_name.value, email: form.p_email.value, phone: form.p_phone.value, country: form.p_country.value };
+      try {
+        await new Promise((res) => setTimeout(res, 900)); // petite attente réaliste
+        const order = await api('/api/orders', {
+          method: 'POST',
+          body: {
+            items, recipient, payer: payerInfo, paymentMethod: form.pay.value, giftMessage: form.gift.value,
+            anonymous: form.anonymous.checked, currency: S.currency, sharedCode: src ? src.sharedCode : null,
+          },
+        });
+        save('pdp_payer', payerInfo);
+        save('pdp_last_recipient', recipient);
+        try { localStorage.removeItem('pdp_prefill'); } catch { /* ignore */ }
+        S.orders.unshift(order.id);
+        save('pdp_orders', S.orders.slice(0, 30));
+        if (!src) { S.cart = []; persistCart(); }
+        S.checkoutSource = null;
+        location.hash = `#/commande/${order.id}?merci=1`;
+      } catch (err) {
+        toast(err.message);
+        btn.disabled = false;
+        drawSum();
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------- suivi
+  const FLOW = [
+    ['payee', 'Paiement confirmé', 'Nous avons bien reçu votre paiement.'],
+    ['preparation', 'En préparation', 'Nos équipes achètent et emballent vos articles.'],
+    ['livraison', 'En cours de livraison', 'Le livreur appelle le bénéficiaire avant d\'arriver.'],
+    ['livree', 'Livrée', 'Photo de la remise envoyée sur WhatsApp.'],
+  ];
+  async function pageOrder(id, params) {
+    setActiveNav('', 'suivi');
+    app.innerHTML = '<div class="empty"><div class="big">⏳</div><p>Chargement…</p></div>';
+    let o;
+    try {
+      o = await api(`/api/orders/${encodeURIComponent(id)}`);
+    } catch (err) {
+      app.innerHTML = `<div class="empty"><div class="big">📦</div><h2>Commande introuvable</h2><p>${esc(err.message)}</p><a class="btn" href="#/suivi">Réessayer</a></div>`;
+      return;
+    }
+    const thanks = params.get('merci') === '1';
+    const idx = FLOW.findIndex(([s]) => s === o.status);
+    const waMsg = `Bonjour ${o.recipient.name} 🎁 Je t'ai envoyé un colis via Panier du Pays ! Livraison prévue à ${o.recipient.city}. Numéro de suivi : ${o.id} — ${location.origin}/#/commande/${o.id}`;
+    app.innerHTML = `
+      ${thanks ? `<div class="success"><div class="big">🎉</div><h1>Merci ${esc(o.payer.name.split(' ')[0])} !</h1><p class="muted">Votre commande est confirmée. ${esc(o.recipient.name)} va bientôt être livré(e) à ${esc(o.recipient.city)}.</p><div class="order-id">${o.id}</div></div>` : `<h1 class="page-title">Commande ${o.id}</h1>`}
+      <div class="cart-layout">
+        <div>
+          <div class="box">
+            <h2>Suivi de la livraison <span class="status-pill ${o.status}">${esc(o.statusLabel)}</span></h2>
+            ${o.status === 'en_attente' ? '<div class="notice" style="margin-bottom:14px">Nous attendons votre virement. Les coordonnées bancaires vous ont été envoyées par e-mail.</div>' : ''}
+            ${o.status === 'annulee' ? '<div class="notice">Cette commande a été annulée. Contactez le service client pour toute question.</div>' : `
+            <div class="timeline">
+              ${FLOW.map(([s, label, sub], i) => {
+                const h = o.history.find((x) => x.status === s);
+                return `<div class="tl ${i <= idx ? 'done' : ''} ${i === idx ? 'current' : ''}"><div class="tl-dot">${i <= idx ? '✓' : ''}</div><div><b>${label}</b><small>${h ? new Date(h.at).toLocaleString('fr-FR', { dateStyle: 'medium', timeStyle: 'short' }) + ' · ' : ''}${sub}</small></div></div>`;
+              }).join('')}
+            </div>`}
+          </div>
+          <div class="box">
+            <h2>Bénéficiaire</h2>
+            <div class="info-box" style="border:0;padding:0">
+              <div><span>👤</span><span><b>${esc(o.recipient.name)}</b>${esc(o.recipient.phone)}</span></div>
+              <div><span>📍</span><span><b>${esc(o.recipient.city)}${o.recipient.quarter ? ', ' + esc(o.recipient.quarter) : ''}</b>${esc(o.recipient.address)} ${o.deliveryDelay ? `· délai ${esc(o.deliveryDelay)}` : ''}${o.recipient.date ? ` · souhaitée le ${esc(new Date(o.recipient.date).toLocaleDateString('fr-FR'))}` : ''}</span></div>
+              ${o.giftMessage ? `<div><span>💌</span><span><b>Message cadeau</b>${esc(o.giftMessage)}</span></div>` : ''}
+              ${o.sharedCode ? `<div><span>🤝</span><span><b>Panier partagé</b>Code ${esc(o.sharedCode)}</span></div>` : ''}
+            </div>
+            <a class="btn btn-wa btn-block" style="margin-top:14px" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(waMsg)}">Prévenir ${esc(o.recipient.name.split(' ')[0])} sur WhatsApp</a>
+          </div>
+        </div>
+        <aside class="summary">
+          <h3>Détail</h3>
+          <div class="mini-items">${o.items.map((i) => `<div class="mini-item"><div class="cart-thumb" style="${byId(i.id) ? bg(byId(i.id)) : ''}">${i.emoji}</div><div>${esc(i.name)}${i.option ? `<br><span class="muted">${esc(i.option)}</span>` : ''}<br><span class="muted">× ${i.qty}</span></div><b>${money(i.total)}</b></div>`).join('')}</div>
+          <div class="sum-row"><span>Sous-total</span><span>${money(o.subtotal)}</span></div>
+          <div class="sum-row"><span>Livraison</span><span>${o.delivery === 0 ? '<span class="free">Offerte</span>' : money(o.delivery)}</span></div>
+          <div class="sum-row"><span>Frais de service</span><span>${money(o.service)}</span></div>
+          <div class="sum-row total"><span>Total payé</span><span>${money(o.total)}</span></div>
+          <div class="sum-row" style="font-size:12px"><span>Paiement</span><span>${esc({ carte: 'Carte bancaire', paypal: 'PayPal', orange_money: 'Orange Money', mtn_momo: 'MTN MoMo', virement: 'Virement' }[o.paymentMethod])}</span></div>
+          <a class="btn btn-outline btn-block" href="#/">Faire une autre commande</a>
+        </aside>
+      </div>`;
+  }
+
+  function pageTrack() {
+    setActiveNav('', 'suivi');
+    app.innerHTML = `
+      <h1 class="page-title">Suivre une commande</h1>
+      <div class="box" style="max-width:560px">
+        <form id="track" style="display:flex;gap:10px;flex-wrap:wrap">
+          <input class="select" style="flex:1;min-width:200px;padding:12px" name="id" placeholder="N° de commande (PDP-XXXXXX) ou code panier" required>
+          <button class="btn">Suivre</button>
+        </form>
+      </div>
+      ${S.orders.length ? `<div class="section"><div class="section-head"><h2>Mes commandes sur cet appareil</h2></div><div class="chips" style="flex-wrap:wrap">${S.orders.map((id) => `<a class="chip" href="#/commande/${esc(id)}">📦 ${esc(id)}</a>`).join('')}</div></div>` : ''}
+      ${S.shared.length ? `<div class="section"><div class="section-head"><h2>Mes paniers partagés</h2></div><div class="chips" style="flex-wrap:wrap">${S.shared.map((c) => `<a class="chip" href="#/partage/${esc(c)}">🤝 ${esc(c)}</a>`).join('')}</div></div>` : ''}`;
+    $('#track').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const v = e.target.id.value.trim().toUpperCase();
+      location.hash = v.startsWith('PDP-') ? `#/commande/${v}` : `#/partage/${v}`;
+    });
+  }
+
+  // ---------------------------------------------------------------- pages d'information
+  function pageHow() {
+    setActiveNav('', 'home');
+    app.innerHTML = `<h1 class="page-title">Comment ça marche ?</h1>
+      <p class="muted">Panier du Pays permet à la diaspora d'acheter au Cameroun pour ses proches, sans transfert d'argent ni intermédiaire.</p>
+      <div class="section">${stepsHtml()}</div>
+      <div class="section">${shareCtaHtml()}</div>
+      <div class="section">${trustHtml()}</div>`;
+  }
+  function pageShareInfo() {
+    setActiveNav('partage', 'home');
+    app.innerHTML = `<h1 class="page-title">🤝 Le panier partagé</h1>
+      <p class="muted">Pour la famille au pays qui sait ce dont elle a besoin, et pour vous qui voulez payer en toute confiance.</p>
+      <div class="section steps">
+        <div class="step"><div class="step-num">1</div><h3>Au Cameroun</h3><p>Votre proche ajoute au panier ce dont il a besoin : vivres, habits, fournitures…</p></div>
+        <div class="step"><div class="step-num">2</div><h3>Il vous envoie le lien</h3><p>Il touche « Faire payer par un proche » et vous envoie le lien par WhatsApp ou SMS.</p></div>
+        <div class="step"><div class="step-num">3</div><h3>Vous validez</h3><p>Vous voyez chaque article et son prix. Vous pouvez modifier le panier avant de payer.</p></div>
+        <div class="step"><div class="step-num">4</div><h3>On livre</h3><p>L'argent ne transite jamais en liquide : nous achetons et livrons directement.</p></div>
+      </div>
+      <div class="section notice green">✅ Avantage : pas de frais de transfert, pas de risque que l'argent soit détourné, et la certitude que la commande arrive à la bonne personne.</div>
+      <div class="section" style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="#/">Composer un panier</a><a class="btn btn-outline" href="#/suivi">J'ai reçu un code</a></div>`;
+  }
+  function pageFaq() {
+    setActiveNav('', 'home');
+    const faq = [
+      ['Dans quelles villes livrez-vous ?', `Yaoundé et Douala en 24 h, et ${S.catalog.cities.length - 3} autres villes en 48 à 96 h (Bafoussam, Bamenda, Garoua, Maroua, Kribi…). Pour un village, choisissez « Autre ville / village ».`],
+      ['Comment savoir que mon proche a bien été livré ?', 'Le livreur prend une photo à la remise du colis. Elle vous est envoyée sur WhatsApp et le suivi passe à « Livrée ».'],
+      ['Dans quelle devise suis-je débité ?', 'Les prix sont fixés en FCFA. Vous pouvez les afficher en €, $, CA$, £ ou CHF ; la conversion est indicative et l\'euro est à parité fixe (1 € = 655,957 FCFA).'],
+      ['Les produits frais arrivent-ils frais ?', 'Oui : les vivres sont achetés le matin même au marché et livrés dans la journée à Yaoundé et Douala.'],
+      ['Puis-je cacher le prix au bénéficiaire ?', 'Oui, cochez « Ne pas afficher le prix au bénéficiaire » au moment de la commande.'],
+      ['Que se passe-t-il si le bénéficiaire est injoignable ?', 'Le livreur réessaie le lendemain et nous vous contactons pour convenir d\'une solution. Aucun frais supplémentaire.'],
+    ];
+    app.innerHTML = `<h1 class="page-title">Questions fréquentes</h1><div style="max-width:780px">${faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div>`;
+  }
+  function pageNotFound() {
+    app.innerHTML = '<div class="empty"><div class="big">🧭</div><h2>Page introuvable</h2><p>Cette page n\'existe pas ou plus.</p><a class="btn" href="#/">Retour à l\'accueil</a></div>';
+  }
+
+  // ---------------------------------------------------------------- administration
+  function sess(op, value) {
+    try {
+      if (op === 'get') return sessionStorage.getItem('pdp_admin');
+      if (op === 'set') return sessionStorage.setItem('pdp_admin', value);
+      return sessionStorage.removeItem('pdp_admin');
+    } catch {
+      if (op === 'get') return S.adminKey;
+      S.adminKey = op === 'set' ? value : '';
+    }
+  }
+  async function pageAdmin() {
+    setActiveNav('', '');
+    const key = sess('get') || '';
+    if (!key) return adminLogin();
+    let data;
+    try {
+      data = await api('/api/admin/orders', { headers: { 'x-admin-key': key } });
+    } catch (err) {
+      sess('remove');
+      return adminLogin(err.message);
+    }
+    const sum = data.orders.filter((o) => o.status !== 'annulee').reduce((s, o) => s + o.total, 0);
+    app.innerHTML = `
+      <h1 class="page-title">Tableau de bord</h1>
+      <div class="stats">
+        <div class="stat"><span class="muted">Commandes</span><b>${data.orders.length}</b></div>
+        <div class="stat"><span class="muted">Chiffre d'affaires</span><b>${money(sum, 'XAF')}</b></div>
+        <div class="stat"><span class="muted">À livrer</span><b>${data.orders.filter((o) => ['payee', 'preparation', 'livraison'].includes(o.status)).length}</b></div>
+        <div class="stat"><span class="muted">Paniers partagés en attente</span><b>${data.sharedCarts.filter((c) => c.status === 'en_attente').length}</b></div>
+      </div>
+      <div class="section-head"><h2>Commandes</h2><button class="btn btn-sm btn-outline" id="logout">Se déconnecter</button></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>N°</th><th>Date</th><th>Bénéficiaire</th><th>Articles</th><th>Total</th><th>Payeur</th><th>Statut</th></tr></thead>
+        <tbody>${data.orders.map((o) => `<tr>
+          <td><a class="link" href="#/commande/${o.id}">${o.id}</a>${o.sharedCode ? '<br><small>🤝 ' + esc(o.sharedCode) + '</small>' : ''}</td>
+          <td>${new Date(o.createdAt).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}</td>
+          <td><b>${esc(o.recipient.name)}</b><br>${esc(o.recipient.phone)}<br>${esc(o.recipient.city)}, ${esc(o.recipient.quarter)}<br><small>${esc(o.recipient.address)}</small></td>
+          <td>${o.items.map((i) => `${i.qty} × ${esc(i.name)}${i.option ? ` (${esc(i.option)})` : ''}`).join('<br>')}${o.giftMessage ? `<br><small>💌 ${esc(o.giftMessage)}</small>` : ''}</td>
+          <td><b>${money(o.total, 'XAF')}</b></td>
+          <td>${esc(o.payer.name)}<br><small>${esc(o.payer.email)}<br>${esc(o.payer.country)}</small></td>
+          <td><select class="select" data-status="${o.id}">${Object.entries(data.statuses).map(([k, v]) => `<option value="${k}" ${k === o.status ? 'selected' : ''}>${v}</option>`).join('')}</select></td>
+        </tr>`).join('') || '<tr><td colspan="7" class="muted">Aucune commande pour le moment.</td></tr>'}</tbody>
+      </table></div>
+      <div class="section-head section"><h2>Paniers partagés</h2></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Code</th><th>Créé par</th><th>Ville</th><th>Articles</th><th>Statut</th></tr></thead>
+        <tbody>${data.sharedCarts.map((c) => `<tr><td><a class="link" href="#/partage/${c.code}">${c.code}</a></td><td>${esc(c.requester.name)}<br><small>${esc(c.requester.phone)}</small></td><td>${esc(c.recipient.city)}</td><td>${c.items.length}</td><td><span class="status-pill ${c.status}">${c.status === 'payee' ? 'Payé · ' + esc(c.orderId) : 'En attente'}</span></td></tr>`).join('') || '<tr><td colspan="5" class="muted">Aucun panier partagé.</td></tr>'}</tbody>
+      </table></div>`;
+    $('#logout').addEventListener('click', () => { sess('remove'); pageAdmin(); });
+    $$('[data-status]').forEach((sel) => sel.addEventListener('change', async () => {
+      try {
+        await api(`/api/admin/orders/${sel.dataset.status}`, { method: 'PATCH', headers: { 'x-admin-key': key }, body: { status: sel.value } });
+        toast('Statut mis à jour ✓');
+      } catch (err) { toast(err.message); }
+    }));
+  }
+  function adminLogin(error) {
+    app.innerHTML = `<h1 class="page-title">Espace administrateur</h1>
+      <form class="box" id="admin-login" style="max-width:420px">
+        <div class="field"><label>Clé d'accès</label><input type="password" name="key" required></div>
+        ${error ? `<p class="notice" style="margin-top:10px">${esc(error)}</p>` : ''}
+        <button class="btn btn-block" style="margin-top:12px">Entrer</button>
+      </form>`;
+    $('#admin-login').addEventListener('submit', (e) => {
+      e.preventDefault();
+      sess('set', e.target.key.value);
+      pageAdmin();
+    });
+  }
+
+  // ================================================================ routeur
+  function render() {
+    clearTimers();
+    closeModal();
+    const raw = location.hash.replace(/^#/, '') || '/';
+    const [pathPart, query = ''] = raw.split('?');
+    const params = new URLSearchParams(query);
+    const parts = pathPart.split('/').filter(Boolean).map(decodeURIComponent);
+    const [a, b] = parts;
+    if (!a) pageHome();
+    else if (a === 'categorie') pageCategory(b);
+    else if (a === 'categories') pageCategories();
+    else if (a === 'flash') pageFlash();
+    else if (a === 'meilleures-ventes') pageList({ title: '🔥 Les plus offerts', products: S.catalog.products.filter((x) => x.tags.includes('best')).sort((x, y) => y.sold - x.sold), navKey: '', crumbs: 'Meilleures ventes' });
+    else if (a === 'produit') pageProduct(b);
+    else if (a === 'recherche') pageSearch(b || '');
+    else if (a === 'panier') pageCart();
+    else if (a === 'favoris') pageFavs();
+    else if (a === 'commande' && b) pageOrder(b, params);
+    else if (a === 'commande') pageCheckout();
+    else if (a === 'partage' && b) pageShared(b, params);
+    else if (a === 'panier-partage') pageShareInfo();
+    else if (a === 'suivi') pageTrack();
+    else if (a === 'comment-ca-marche') pageHow();
+    else if (a === 'faq') pageFaq();
+    else if (a === 'admin') pageAdmin();
+    else pageNotFound();
+    if (a !== 'recherche') $('#search-input').value = '';
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', () => {
+    // quitter la page de paiement d'un panier partagé annule ce contexte
+    if (!location.hash.startsWith('#/commande')) S.checkoutSource = null;
+    render();
+  });
+
+  // ================================================================ démarrage
+  (async () => {
+    try {
+      S.catalog = await api('/api/catalog');
+    } catch (err) {
+      app.innerHTML = `<div class="empty"><div class="big">📡</div><h2>Connexion impossible</h2><p>${esc(err.message)}</p></div>`;
+      return;
+    }
+    if (!S.catalog.currencies[S.currency]) S.currency = 'XAF';
+    setupHeader();
+    persistCart();
+    render();
+  })();
+})();
+
+</script>
