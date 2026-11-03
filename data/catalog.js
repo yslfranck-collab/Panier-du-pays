@@ -256,23 +256,23 @@ const products = [
   p('moustiquaire', 'beaute', 'Moustiquaire imprégnée', 4500, null, '🦟', { sold: 1300, reviews: 330 }),
 ];
 
-// Livraison au Cameroun : frais en FCFA et délai en jours.
+// Livraison au Cameroun : frais en FCFA, délai affiché et nombre de jours estimé (eta).
 const cities = [
-  { name: 'Yaoundé', fee: 1500, days: '24 h' },
-  { name: 'Douala', fee: 1500, days: '24 h' },
-  { name: 'Bafoussam', fee: 2500, days: '48 h' },
-  { name: 'Dschang', fee: 2500, days: '48 h' },
-  { name: 'Buea', fee: 2500, days: '48 h' },
-  { name: 'Limbé', fee: 2500, days: '48 h' },
-  { name: 'Kribi', fee: 3000, days: '48 h' },
-  { name: 'Ebolowa', fee: 3000, days: '48 h' },
-  { name: 'Bamenda', fee: 3000, days: '48–72 h' },
-  { name: 'Kumba', fee: 3000, days: '48–72 h' },
-  { name: 'Bertoua', fee: 3500, days: '72 h' },
-  { name: 'Ngaoundéré', fee: 4000, days: '72 h' },
-  { name: 'Garoua', fee: 4000, days: '72 h' },
-  { name: 'Maroua', fee: 4500, days: '72–96 h' },
-  { name: 'Autre ville / village', fee: 6000, days: '3–5 jours' },
+  { name: 'Yaoundé', fee: 1500, days: '24 h', eta: 1 },
+  { name: 'Douala', fee: 1500, days: '24 h', eta: 1 },
+  { name: 'Bafoussam', fee: 2500, days: '48 h', eta: 2 },
+  { name: 'Dschang', fee: 2500, days: '48 h', eta: 2 },
+  { name: 'Buea', fee: 2500, days: '48 h', eta: 2 },
+  { name: 'Limbé', fee: 2500, days: '48 h', eta: 2 },
+  { name: 'Kribi', fee: 3000, days: '48 h', eta: 2 },
+  { name: 'Ebolowa', fee: 3000, days: '48 h', eta: 2 },
+  { name: 'Bamenda', fee: 3000, days: '48–72 h', eta: 3 },
+  { name: 'Kumba', fee: 3000, days: '48–72 h', eta: 3 },
+  { name: 'Bertoua', fee: 3500, days: '72 h', eta: 3 },
+  { name: 'Ngaoundéré', fee: 4000, days: '72 h', eta: 3 },
+  { name: 'Garoua', fee: 4000, days: '72 h', eta: 3 },
+  { name: 'Maroua', fee: 4500, days: '72–96 h', eta: 4 },
+  { name: 'Autre ville / village', fee: 6000, days: '3–5 jours', eta: 5 },
 ];
 
 // Taux indicatifs : 1 unité de devise = X FCFA (l'euro est à parité fixe).

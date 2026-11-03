@@ -5,78 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Panier du Pays — Faites plaisir à vos proches au Cameroun</title>
   <meta name="description" content="Depuis l'étranger, achetez vivres, vêtements, chaussures, cadeaux et paniers pour votre famille au Cameroun. Livraison à Yaoundé, Douala et partout au pays.">
-  <meta name="theme-color" content="#111111">
+  <meta name="theme-color" content="#0c2a21">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="promo-bar" id="promo-bar"><span>Livraison offerte dès 50 000 FCFA d'achat</span></div>
-
-  <header class="header">
-    <div class="header-inner">
-      <a href="#/" class="logo" aria-label="Accueil Panier du Pays">
-        <span class="logo-mark">🧺</span>
-        <span class="logo-text">PANIER<b>DU PAYS</b></span>
+  <header class="header" id="top">
+    <div class="belt">
+      <a href="#/" class="logo nav-box" aria-label="Accueil Panier du Pays">
+        <span class="logo-word">panier<b>du pays</b></span>
+        <span class="logo-flag" aria-hidden="true"><i></i><i></i><i></i></span>
       </a>
+      <button class="nav-box deliver" id="deliver-btn" type="button">
+        <span class="pin" aria-hidden="true">📍</span>
+        <span><small>Livrer à</small><b id="deliver-city">Yaoundé</b></span>
+      </button>
       <form class="search" id="search-form" role="search">
-        <input type="search" id="search-input" placeholder="Manioc, pagne, chaussures, panier de Noël…" aria-label="Rechercher">
+        <select id="search-cat" aria-label="Catégorie de recherche"></select>
+        <input type="search" id="search-input" placeholder="Rechercher sur Panier du Pays" aria-label="Rechercher">
         <button type="submit" aria-label="Lancer la recherche">
-          <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 24 24" width="22" height="22"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5l5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
         </button>
       </form>
-      <div class="header-actions">
-        <select id="currency" class="currency" aria-label="Devise"></select>
-        <a href="#/suivi" class="icon-btn hide-mobile" title="Suivre une commande">
-          <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </a>
-        <a href="#/favoris" class="icon-btn hide-mobile" title="Mes favoris">
-          <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 20s-7-4.4-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.6-9 9-9 9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#/panier" class="icon-btn" title="Mon panier">
-          <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
-          <span class="badge" id="cart-count" hidden>0</span>
-        </a>
-      </div>
+      <label class="nav-box currency-box" title="Devise d'affichage">
+        <span class="flag-cm" aria-hidden="true"></span>
+        <select id="currency" aria-label="Devise"></select>
+      </label>
+      <a href="#/suivi" class="nav-box two-lines hide-mobile"><small>Bonjour</small><b>Compte et suivi</b></a>
+      <a href="#/suivi" class="nav-box two-lines hide-mobile"><small>Retours</small><b>et commandes</b></a>
+      <a href="#/panier" class="nav-box cart-box" aria-label="Panier">
+        <span class="cart-icon">
+          <svg viewBox="0 0 40 32" width="40" height="32"><path d="M2 4h6l4 18h20l4-13H11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="15" cy="27" r="2.4" fill="currentColor"/><circle cx="29" cy="27" r="2.4" fill="currentColor"/></svg>
+          <span class="cart-num" id="cart-count">0</span>
+        </span>
+        <b class="hide-mobile">Panier</b>
+      </a>
     </div>
-    <nav class="cat-nav" id="cat-nav" aria-label="Catégories"></nav>
+    <nav class="subnav" aria-label="Rayons">
+      <button class="nav-box all-btn" id="menu-btn" type="button">
+        <svg viewBox="0 0 20 16" width="18" height="15"><path d="M1 2h18M1 8h18M1 14h18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        Toutes
+      </button>
+      <div class="subnav-links" id="subnav-links"></div>
+    </nav>
+    <button class="deliver-strip" id="deliver-strip" type="button">📍 Livrer à <b id="deliver-city-m">Yaoundé</b> — modifier</button>
   </header>
 
   <main id="app" class="app"></main>
 
   <footer class="footer">
-    <div class="footer-inner">
+    <a href="#top" class="back-top" id="back-top">Retour en haut</a>
+    <div class="footer-cols">
       <div>
-        <div class="logo logo-footer"><span class="logo-mark">🧺</span><span class="logo-text">PANIER<b>DU PAYS</b></span></div>
-        <p>Le pont entre la diaspora et la famille au Cameroun. Vous choisissez, vous payez d'où vous êtes, nous livrons au pays.</p>
-      </div>
-      <div>
-        <h4>Aide</h4>
+        <h4>Pour mieux nous connaître</h4>
         <a href="#/comment-ca-marche">Comment ça marche</a>
-        <a href="#/suivi">Suivre ma commande</a>
         <a href="#/panier-partage">Le panier partagé</a>
         <a href="#/faq">Questions fréquentes</a>
       </div>
       <div>
-        <h4>Livraison</h4>
-        <span>Yaoundé & Douala en 24 h</span>
-        <span>Toutes les régions en 48–96 h</span>
-        <span>Photo à la remise du colis</span>
+        <h4>Vendre avec nous</h4>
+        <span>Commerçants des marchés</span>
+        <span>Ateliers de couture</span>
+        <span>Pâtisseries et traiteurs</span>
       </div>
       <div>
-        <h4>Paiement sécurisé</h4>
-        <div class="pay-logos"><span>VISA</span><span>Mastercard</span><span>PayPal</span><span>Orange Money</span><span>MTN MoMo</span></div>
+        <h4>Moyens de paiement</h4>
+        <span>Carte Visa et Mastercard</span>
+        <span>PayPal</span>
+        <span>Orange Money et MTN MoMo</span>
+        <span>Virement SEPA et Interac</span>
+      </div>
+      <div>
+        <h4>Besoin d'aide ?</h4>
+        <a href="#/suivi">Suivre une commande</a>
+        <a href="#/faq">Livraison et villes desservies</a>
+        <span>Service client 7 j/7, en français et en anglais</span>
       </div>
     </div>
-    <div class="footer-bottom">© <span id="year"></span> Panier du Pays · Fait avec ❤️ entre le Cameroun et le monde</div>
+    <div class="footer-line">
+      <a href="#/" class="logo"><span class="logo-word">panier<b>du pays</b></span><span class="logo-flag" aria-hidden="true"><i></i><i></i><i></i></span></a>
+      <span class="footer-countries">France · Belgique · Suisse · Allemagne · Royaume-Uni · Canada · États-Unis · Cameroun</span>
+    </div>
+    <div class="footer-bottom">© <span id="year"></span> Panier du Pays · Entre le Cameroun et le monde</div>
   </footer>
 
   <nav class="tabbar" aria-label="Navigation principale">
-    <a href="#/" data-tab="home"><span>🏠</span>Accueil</a>
-    <a href="#/categories" data-tab="categories"><span>🗂️</span>Catégories</a>
-    <a href="#/panier" data-tab="panier"><span>🛍️</span>Panier<i class="tab-badge" id="tab-cart-count" hidden>0</i></a>
-    <a href="#/favoris" data-tab="favoris"><span>🤍</span>Favoris</a>
-    <a href="#/suivi" data-tab="suivi"><span>👤</span>Moi</a>
+    <a href="#/" data-tab="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Accueil</a>
+    <a href="#/suivi" data-tab="suivi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4.5-6 8-6s7 2 8 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Vous</a>
+    <a href="#/panier" data-tab="panier"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h3l3 12h11l3-9H7M10 20.5h.01M18 20.5h.01" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Panier<i class="tab-badge" id="tab-cart-count" hidden>0</i></a>
+    <a href="#/favoris" data-tab="favoris"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.6-9 9-9 9z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Envies</a>
+    <button type="button" data-tab="menu" id="tab-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Menu</button>
   </nav>
+
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer-backdrop" data-close-drawer></div>
+    <aside class="drawer-panel" aria-label="Toutes les catégories">
+      <div class="drawer-head"><span class="avatar">👤</span> Bonjour, bienvenue</div>
+      <div id="drawer-body"></div>
+    </aside>
+    <button class="drawer-x" data-close-drawer aria-label="Fermer le menu">×</button>
+  </div>
+
+  <div class="sheet" id="sheet" hidden>
+    <div class="sheet-backdrop" data-close-sheet></div>
+    <aside class="sheet-panel" id="sheet-body" aria-label="Ajouté au panier"></aside>
+  </div>
 
   <div class="modal" id="modal" hidden>
     <div class="modal-backdrop" data-close></div>

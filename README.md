@@ -1,6 +1,14 @@
 # Panier du Pays 🧺🇨🇲
 
-Boutique en ligne qui permet à la **diaspora** (France, Belgique, Canada, USA…) d'acheter **au Cameroun** pour ses proches : vivres du marché (manioc, plantain, riz, viande…), vêtements en pagne, chaussures de fête, cadeaux, électroménager, paniers tout prêts. L'interface reprend les codes d'une grande boutique de mode en ligne : barre promo, catégories, ventes flash avec compte à rebours, grille de produits, fiches avec options, favoris et barre d'onglets sur mobile.
+Boutique en ligne qui permet à la **diaspora** (France, Belgique, Canada, USA…) d'acheter **au Cameroun** pour ses proches : vivres du marché (manioc, plantain, riz, viande…), vêtements en pagne, chaussures de fête, cadeaux, électroménager, paniers tout prêts.
+
+L'interface reprend l'organisation d'une grande place de marché en ligne, avec l'identité propre de Panier du Pays (nom, logo, couleurs du drapeau) :
+- **Bandeau du haut** : « Livrer à » (ville du proche), grande barre de recherche avec choix du rayon, devise, compte, commandes et panier. Dessous, une barre des rayons et un menu « Toutes ».
+- **Accueil** : un carrousel, des cartes de rayons à quatre vignettes, des ventes flash avec compte à rebours et des carrousels de meilleures ventes.
+- **Pages de résultats** : filtres à gauche (catégorie, avis, prix, promotions, livraison), tri, et cartes avec étoiles, nombre d'achats, prix conseillé et date de livraison.
+- **Fiche produit** : galerie, options, « À propos de cet article », encart d'achat (date de livraison, « Ajouter au panier », « Acheter maintenant ») et avis clients avec répartition des étoiles.
+- **Panier latéral** « Ajouté au panier », page panier, puis commande en cinq étapes.
+- **Sur mobile** : barre d'onglets en bas (Accueil, Vous, Panier, Envies, Menu).
 
 ## La fonction clé : le panier partagé 🤝
 
