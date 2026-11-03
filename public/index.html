@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Panier du Pays — Faites plaisir à vos proches au Cameroun</title>
+  <meta name="description" content="Depuis l'étranger, achetez vivres, vêtements, chaussures, cadeaux et paniers pour votre famille au Cameroun. Livraison à Yaoundé, Douala et partout au pays.">
+  <meta name="theme-color" content="#111111">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="promo-bar" id="promo-bar"><span>Livraison offerte dès 50 000 FCFA d'achat</span></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="#/" class="logo" aria-label="Accueil Panier du Pays">
+        <span class="logo-mark">🧺</span>
+        <span class="logo-text">PANIER<b>DU PAYS</b></span>
+      </a>
+      <form class="search" id="search-form" role="search">
+        <input type="search" id="search-input" placeholder="Manioc, pagne, chaussures, panier de Noël…" aria-label="Rechercher">
+        <button type="submit" aria-label="Lancer la recherche">
+          <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </form>
+      <div class="header-actions">
+        <select id="currency" class="currency" aria-label="Devise"></select>
+        <a href="#/suivi" class="icon-btn hide-mobile" title="Suivre une commande">
+          <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </a>
+        <a href="#/favoris" class="icon-btn hide-mobile" title="Mes favoris">
+          <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 20s-7-4.4-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.6-9 9-9 9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#/panier" class="icon-btn" title="Mon panier">
+          <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span class="badge" id="cart-count" hidden>0</span>
+        </a>
+      </div>
+    </div>
+    <nav class="cat-nav" id="cat-nav" aria-label="Catégories"></nav>
+  </header>
+
+  <main id="app" class="app"></main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="logo logo-footer"><span class="logo-mark">🧺</span><span class="logo-text">PANIER<b>DU PAYS</b></span></div>
+        <p>Le pont entre la diaspora et la famille au Cameroun. Vous choisissez, vous payez d'où vous êtes, nous livrons au pays.</p>
+      </div>
+      <div>
+        <h4>Aide</h4>
+        <a href="#/comment-ca-marche">Comment ça marche</a>
+        <a href="#/suivi">Suivre ma commande</a>
+        <a href="#/panier-partage">Le panier partagé</a>
+        <a href="#/faq">Questions fréquentes</a>
+      </div>
+      <div>
+        <h4>Livraison</h4>
+        <span>Yaoundé & Douala en 24 h</span>
+        <span>Toutes les régions en 48–96 h</span>
+        <span>Photo à la remise du colis</span>
+      </div>
+      <div>
+        <h4>Paiement sécurisé</h4>
+        <div class="pay-logos"><span>VISA</span><span>Mastercard</span><span>PayPal</span><span>Orange Money</span><span>MTN MoMo</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© <span id="year"></span> Panier du Pays · Fait avec ❤️ entre le Cameroun et le monde</div>
+  </footer>
+
+  <nav class="tabbar" aria-label="Navigation principale">
+    <a href="#/" data-tab="home"><span>🏠</span>Accueil</a>
+    <a href="#/categories" data-tab="categories"><span>🗂️</span>Catégories</a>
+    <a href="#/panier" data-tab="panier"><span>🛍️</span>Panier<i class="tab-badge" id="tab-cart-count" hidden>0</i></a>
+    <a href="#/favoris" data-tab="favoris"><span>🤍</span>Favoris</a>
+    <a href="#/suivi" data-tab="suivi"><span>👤</span>Moi</a>
+  </nav>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close aria-label="Fermer">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

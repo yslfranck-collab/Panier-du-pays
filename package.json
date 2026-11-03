@@ -1,0 +1,13 @@
+{
+  "name": "panier-du-pays",
+  "version": "1.0.0",
+  "description": "Boutique en ligne pour que la diaspora achète au Cameroun pour ses proches (avec panier partagé).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": { "node": ">=18" },
+  "license": "UNLICENSED",
+  "private": true
+}
